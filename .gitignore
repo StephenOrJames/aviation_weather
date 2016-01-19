@@ -1,2 +1,5 @@
+# Python compiled bytecode
+__pycache__/
+
 # PyCharm
 .idea/

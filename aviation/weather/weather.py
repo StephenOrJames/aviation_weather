@@ -3,13 +3,16 @@ from aviation.exceptions import *
 
 
 class Station:
-    # TODO: Any way to validate? re.search(r"[A-Z][A-Z0-9]{3}", id.upper())?
+    """Represents a weather station"""
 
-    def __init__(self, id):
-        self.id = id
+    def __init__(self, raw):
+        m = re.search(r"\b(?P<id>[A-Z][A-Z0-9]{3})\b", raw.upper())
+        if not m:
+            raise StationDecodeException
+        self.identifier = m.group("id")
 
     def __str__(self):
-        return self.id
+        return self.identifier
 
 
 class Time:
@@ -53,6 +56,7 @@ class Wind:
 
 
 class Visibility:
+
     def __init__(self, raw):
         m = re.search(r"(?:\b(?P<less>M)?(?P<distance1>\d[ \d/]*)(?P<unit>SM)|\b(?P=less)?(?P<distance2>\d{4})\b)", raw)
         # int: \d{4}
@@ -73,6 +77,8 @@ class Visibility:
 
 
 class RunwayVisualRange:
+    """Represents the runway visual range"""
+
     def __init__(self, raw):
         m = re.search(
                 r"R(?P<runway>\d{2}[LRC]?)/(?P<pm>[PM])?(?P<d_min>\d{4})(?:V(?P<d_max>\d{4}))?(?P<unit>FT)?(?P<trend>[UND])?",
@@ -211,7 +217,7 @@ class SkyCondition:
 
 
 class Temperature:
-    """The temperature (and dew point) group if the Report"""
+    """The temperature (and dew point) group"""
 
     def __init__(self, raw):
         m = re.search(r"\b(?P<temperature>M?\d{1,2})/(?P<dew_point>M?\d{,2})", raw)
@@ -229,6 +235,7 @@ class Temperature:
 
 
 class AltimeterSetting:
+
     def __init__(self, raw):
         m = re.search(r"(?P<indicator>[AQ])(?P<value>\d{4})", raw)
         if not m:
@@ -241,6 +248,7 @@ class AltimeterSetting:
 
 
 class Remarks:
+
     def __init__(self, raw):
         self.text = raw
 

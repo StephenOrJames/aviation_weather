@@ -107,7 +107,7 @@ class Report:
         if not text:
             return []
         else:
-            return [text]  # TODO: consider more detail from remarks?
+            return [Remarks(text)]  # TODO: consider more detail from remarks?
 
     @staticmethod
     def retrieve(code):

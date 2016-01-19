@@ -18,6 +18,11 @@ class StationDecodeException(WeatherDecodeException):
     pass
 
 
+class TimeDecodeException(WeatherDecodeException):
+    """Time could not be decoded"""
+    pass
+
+
 class WindDecodeException(WeatherDecodeException):
     """Wind could not be decoded"""
     pass

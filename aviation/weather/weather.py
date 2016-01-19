@@ -17,12 +17,16 @@ class Station:
 
 class Time:
     # TODO: use the datetime library to provide additional features?
+    # TODO: validate the specific time values?
 
     def __init__(self, raw):
-        self.day = raw[0:2]
-        self.hour = raw[2:4]
-        self.minute = raw[4:6]
-        self.timezone = raw[6]
+        m = re.search(r"\b(?P<day>\d{2})(?P<hour>\d{2})(?P<minute>\d{2})(?P<timezone>Z)\b", raw)
+        if not m:
+            raise TimeDecodeException
+        self.day = m.group("day")
+        self.hour = m.group("hour")
+        self.minute = m.group("minute")
+        self.timezone = m.group("timezone")
 
     def __str__(self):
         return self.day + self.hour + self.minute + self.timezone
@@ -33,8 +37,8 @@ class Wind:
 
     def __init__(self, raw):
         m = re.search(
-                r"(?P<direction>(?:\d{3}|VRB))(?P<speed>\d{2,3})(?:G(?P<gusts>\d{2,3}))?(?P<unit>(?:KT|MPS))"
-                r"(?: (?P<v_from>\d{3})V(?P<v_to>\d{3}))?",
+                r"\b(?P<direction>(?:\d{3}|VRB))(?P<speed>\d{2,3})(?:G(?P<gusts>\d{2,3}))?(?P<unit>(?:KT|MPS))"
+                r"(?: (?P<v_from>\d{3})V(?P<v_to>\d{3}))?\b",
                 raw
         )
         if not m:
@@ -58,10 +62,7 @@ class Wind:
 class Visibility:
 
     def __init__(self, raw):
-        m = re.search(r"(?:\b(?P<less>M)?(?P<distance1>\d[ \d/]*)(?P<unit>SM)|\b(?P=less)?(?P<distance2>\d{4})\b)", raw)
-        # int: \d{4}
-        # USA: M?\d[ 0-9/]{,4}\dSM
-        #
+        m = re.search(r"\b(?:(?P<less>M)?(?P<distance1>\d[ \d/]{,4})(?P<unit>SM)|(?P=less)?(?P<distance2>\d{4}))\b", raw)
         if not m:
             raise VisibilityDecodeException
         self.less_than = True if m.group("less") else False

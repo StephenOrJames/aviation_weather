@@ -37,9 +37,9 @@ class Wind:
 
     def __init__(self, raw):
         m = re.search(
-                r"\b(?P<direction>(?:\d{3}|VRB))(?P<speed>\d{2,3})(?:G(?P<gusts>\d{2,3}))?(?P<unit>(?:KT|MPS))"
-                r"(?: (?P<v_from>\d{3})V(?P<v_to>\d{3}))?\b",
-                raw
+            r"\b(?P<direction>(?:\d{3}|VRB))(?P<speed>\d{2,3})(?:G(?P<gusts>\d{2,3}))?(?P<unit>(?:KT|MPS))"
+            r"(?: (?P<v_from>\d{3})V(?P<v_to>\d{3}))?\b",
+            raw
         )
         if not m:
             raise WindDecodeException
@@ -62,7 +62,10 @@ class Wind:
 class Visibility:
 
     def __init__(self, raw):
-        m = re.search(r"\b(?:(?P<less>M)?(?P<distance1>\d[ \d/]{,4})(?P<unit>SM)|(?P=less)?(?P<distance2>\d{4}))\b", raw)
+        m = re.search(
+            r"\b(?:(?P<less>M)?(?P<distance1>\d[ \d/]{,4})(?P<unit>SM)|(?P=less)?(?P<distance2>\d{4}))\b",
+            raw
+        )
         if not m:
             raise VisibilityDecodeException
         self.less_than = True if m.group("less") else False
@@ -82,7 +85,8 @@ class RunwayVisualRange:
 
     def __init__(self, raw):
         m = re.search(
-            r"\bR(?P<runway>\d{2}[LRC]?)/(?P<d_min>[PM]?\d{4})(?:V(?P<d_max>[PM]?\d{4}))?(?P<unit>FT)?(?P<trend>[UND])?\b",
+            r"\bR(?P<runway>\d{2}[LRC]?)/(?P<d_min>[PM]?\d{4})"
+            r"(?:V(?P<d_max>[PM]?\d{4}))?(?P<unit>FT)?(?P<trend>[UND])?\b",
             raw
         )
         if not m:
@@ -157,7 +161,10 @@ class WeatherGroup:
 
     def __init__(self, raw):
         m = re.search(
-            r"(?P<intensity>(?:%(intensities)s))?(?P<descriptor>(?:%(descriptors)s))?(?P<phenomenon>(?:%(phenomena)s){1,3})?\b" %
+            r"(?P<intensity>(?:%(intensities)s))?"
+            r"(?P<descriptor>(?:%(descriptors)s))?"
+            r"(?P<phenomenon>(?:%(phenomena)s){1,3})?\b"
+            %
             {
                 "intensities": "|".join(WeatherGroup.INTENSITIES).replace("+", "\+").replace("||", "|").strip("|"),
                 "descriptors": "|".join(WeatherGroup.DESCRIPTORS),
@@ -167,7 +174,7 @@ class WeatherGroup:
         )
         if not (m and any((m.group("descriptor"), m.group("phenomenon")))):
             raise WeatherGroupDecodeException
-        self.intensity = m.group("intensity") or ""  # "" is valid for moderate
+        self.intensity = m.group("intensity") or ""  # Empty string for moderate intensity
         self.descriptor = m.group("descriptor")
         p = m.group("phenomenon")
         if p and len(p) > 2:
@@ -199,8 +206,8 @@ class SkyCondition:
 
     def __init__(self, raw):
         m = re.search(
-                r"\b(?P<type>(?:%(types)s))(?P<height>\d{3})?\b" % {"types": "|".join(SkyCondition.TYPES)},
-                raw
+            r"\b(?P<type>(?:%(types)s))(?P<height>\d{3})?\b" % {"types": "|".join(SkyCondition.TYPES)},
+            raw
         )
         if not m:
             raise SkyConditionDecodeException
@@ -220,7 +227,6 @@ class Temperature:
     def __init__(self, raw):
         m = re.search(r"\b(?P<temperature>M?\d{1,2})/(?P<dew_point>M?\d{1,2})?\b", raw)
         if not m:
-            # print("'%s'" % raw)  # TODO: remove this line
             raise TemperatureDecodeException
         self.temperature = m.group("temperature")
         self.dew_point = m.group("dew_point")

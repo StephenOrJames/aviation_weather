@@ -196,8 +196,8 @@ class TestWeather(unittest.TestCase):
             with self.assertRaises(TemperatureDecodeException):
                 Temperature(test)
 
-    def test_altimeter_setting(self):
-        """Tests for weather.AltimeterSetting"""
+    def test_pressure(self):
+        """Tests for weather.Pressure"""
 
         # Valid
         self.assertEqual("A2992", str(Pressure("A2992")))

@@ -82,13 +82,12 @@ class RunwayVisualRange:
 
     def __init__(self, raw):
         m = re.search(
-                r"R(?P<runway>\d{2}[LRC]?)/(?P<pm>[PM])?(?P<d_min>\d{4})(?:V(?P<d_max>\d{4}))?(?P<unit>FT)?(?P<trend>[UND])?",
-                raw
+            r"\bR(?P<runway>\d{2}[LRC]?)/(?P<d_min>[PM]?\d{4})(?:V(?P<d_max>[PM]?\d{4}))?(?P<unit>FT)?(?P<trend>[UND])?\b",
+            raw
         )
         if not m:
             raise RunwayVisualRangeDecodeException
         self.runway = m.group("runway")
-        self.pm = m.group("pm")
         if m.group("d_max"):
             self.distance = (m.group("d_min"), m.group("d_max"))
         else:
@@ -98,8 +97,6 @@ class RunwayVisualRange:
 
     def __str__(self):
         raw = "R" + self.runway + "/"
-        if self.pm:
-            raw += self.pm
         if isinstance(self.distance, tuple):
             raw += self.distance[0] + "V" + self.distance[1]
         else:
@@ -160,16 +157,16 @@ class WeatherGroup:
 
     def __init__(self, raw):
         m = re.search(
-            r"(?P<intensity>(?:%(intensities)s))?(?P<descriptor>(?:%(descriptors)s))?(?P<phenomenon>(?:%(phenomena)s){1,3})?" %
+            r"(?P<intensity>(?:%(intensities)s))?(?P<descriptor>(?:%(descriptors)s))?(?P<phenomenon>(?:%(phenomena)s){1,3})?\b" %
             {
-                "intensities": "|".join(WeatherGroup.INTENSITIES).replace("+", "\+").strip("|"),
+                "intensities": "|".join(WeatherGroup.INTENSITIES).replace("+", "\+").replace("||", "|").strip("|"),
                 "descriptors": "|".join(WeatherGroup.DESCRIPTORS),
                 "phenomena": "|".join(WeatherGroup.PHENOMENA)
             },
             raw
         )
-        if not any(m.groups()):
-            raise WeatherGroupDecodeException  # TODO: also raise if only intensity is set
+        if not (m and any((m.group("descriptor"), m.group("phenomenon")))):
+            raise WeatherGroupDecodeException
         self.intensity = m.group("intensity") or ""  # "" is valid for moderate
         self.descriptor = m.group("descriptor")
         p = m.group("phenomenon")
@@ -202,7 +199,7 @@ class SkyCondition:
 
     def __init__(self, raw):
         m = re.search(
-                r"(?P<type>(?:%(types)s))(?P<height>\d{3})?" % {"types": "|".join(SkyCondition.TYPES)},
+                r"\b(?P<type>(?:%(types)s))(?P<height>\d{3})?\b" % {"types": "|".join(SkyCondition.TYPES)},
                 raw
         )
         if not m:
@@ -221,7 +218,7 @@ class Temperature:
     """The temperature (and dew point) group"""
 
     def __init__(self, raw):
-        m = re.search(r"\b(?P<temperature>M?\d{1,2})/(?P<dew_point>M?\d{,2})", raw)
+        m = re.search(r"\b(?P<temperature>M?\d{1,2})/(?P<dew_point>M?\d{1,2})?\b", raw)
         if not m:
             # print("'%s'" % raw)  # TODO: remove this line
             raise TemperatureDecodeException
@@ -238,7 +235,7 @@ class Temperature:
 class AltimeterSetting:
 
     def __init__(self, raw):
-        m = re.search(r"(?P<indicator>[AQ])(?P<value>\d{4})", raw)
+        m = re.search(r"\b(?P<indicator>[AQ])(?P<value>\d{4})\b", raw)
         if not m:
             raise AltimeterSettingDecodeException
         self.indicator = m.group("indicator")

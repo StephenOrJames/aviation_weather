@@ -200,12 +200,12 @@ class TestWeather(unittest.TestCase):
         """Tests for weather.AltimeterSetting"""
 
         # Valid
-        self.assertEqual("A2992", str(AltimeterSetting("A2992")))
-        self.assertEqual("Q1013", str(AltimeterSetting("Q1013")))
+        self.assertEqual("A2992", str(Pressure("A2992")))
+        self.assertEqual("Q1013", str(Pressure("Q1013")))
 
         # Invalid
-        with self.assertRaises(AltimeterSettingDecodeException):
-            AltimeterSetting("3000")  # no unit indicator; more likely visibility
+        with self.assertRaises(PressureDecodeException):
+            Pressure("3000")  # no unit indicator; more likely visibility
 
     def test_remarks(self):
         """Tests for weather.Remarks"""

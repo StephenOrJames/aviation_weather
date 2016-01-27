@@ -94,8 +94,8 @@ class Report:
             parts = parts[1:]
 
         try:
-            self.altimeter_setting = AltimeterSetting(parts[0])
-        except (AltimeterSettingDecodeException, IndexError):
+            self.altimeter_setting = Pressure(parts[0])
+        except (PressureDecodeException, IndexError):
             self.altimeter_setting = None
 
         body = [self.type, self.station, self.time, self.modifier, self.wind, self.visibility,

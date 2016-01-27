@@ -53,6 +53,6 @@ class TemperatureDecodeException(WeatherDecodeException):
     pass
 
 
-class AltimeterSettingDecodeException(WeatherDecodeException):
+class PressureDecodeException(WeatherDecodeException):
     """Altimeter setting (QNH) could not be decoded"""
     pass

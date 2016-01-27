@@ -238,12 +238,12 @@ class Temperature:
         return raw
 
 
-class AltimeterSetting:
+class Pressure:
 
     def __init__(self, raw):
         m = re.search(r"\b(?P<indicator>[AQ])(?P<value>\d{4})\b", raw)
         if not m:
-            raise AltimeterSettingDecodeException
+            raise PressureDecodeException
         self.indicator = m.group("indicator")
         self.value = m.group("value")
 

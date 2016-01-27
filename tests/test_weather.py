@@ -3,6 +3,7 @@ from aviation.weather.weather import *
 
 
 class TestWeather(unittest.TestCase):
+    """Unit tests for the various weather parsers"""
 
     def test_station(self):
         """Tests for weather.Station"""

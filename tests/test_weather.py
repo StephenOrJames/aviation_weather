@@ -159,6 +159,7 @@ class TestWeather(unittest.TestCase):
             "SCT024",
             "BKN048",
             "OVC120",
+            "OVC015CB"
         ]
         for test in tests:
             self.assertEqual(test, str(SkyCondition(test)))

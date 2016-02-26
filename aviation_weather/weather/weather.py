@@ -1,5 +1,5 @@
 import re
-from aviation.exceptions import *
+from aviation_weather.exceptions import *
 
 
 class Station:

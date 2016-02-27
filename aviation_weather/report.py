@@ -1,6 +1,7 @@
 from urllib.error import HTTPError
 from urllib.request import urlopen
-from .weather import *
+import aviation_weather
+import aviation_weather.exceptions as exceptions
 
 
 class Report:
@@ -21,7 +22,7 @@ class Report:
     def _parse_body(self, text):
         parts = text.split()
         if len(parts) == 0:
-            raise ReportDecodeException
+            raise exceptions.ReportDecodeException
 
         if parts[0] in ("METAR", "SPECI"):
             self.type = parts[0]
@@ -38,20 +39,20 @@ class Report:
         if self.modifier:
             parts.remove(self.modifier)
 
-        self.station = Station(parts[0])
-        self.time = Time(parts[1])
+        self.station = aviation_weather.Station(parts[0])
+        self.time = aviation_weather.Time(parts[1])
 
         try:
-            self.wind = Wind(text)
-        except (WindDecodeException, IndexError):
+            self.wind = aviation_weather.Wind(text)
+        except (exceptions.WindDecodeException, IndexError):
             self.wind = None
             parts = parts[2:]
         else:
             parts = " ".join(parts[2:]).split(str(self.wind), 1)[1].split()  # remove used parts
 
         try:
-            self.visibility = Visibility(" ".join(parts[:2]))
-        except (VisibilityDecodeException, IndexError):
+            self.visibility = aviation_weather.Visibility(" ".join(parts[:2]))
+        except (exceptions.VisibilityDecodeException, IndexError):
             self.visibility = None
         else:
             parts = text.split(str(self.visibility), 1)[1].split()  # remove used parts
@@ -60,9 +61,9 @@ class Report:
         i = 0
         try:
             while True:
-                t.append(RunwayVisualRange(parts[i]))
+                t.append(aviation_weather.RunwayVisualRange(parts[i]))
                 i += 1
-        except (RunwayVisualRangeDecodeException, IndexError):
+        except (exceptions.RunwayVisualRangeDecodeException, IndexError):
             parts = parts[i:]
         self.runway_visual_range = tuple(t)
 
@@ -70,9 +71,9 @@ class Report:
         i = 0
         try:
             while True:
-                t.append(WeatherGroup(parts[i]))
+                t.append(aviation_weather.WeatherGroup(parts[i]))
                 i += 1
-        except (WeatherGroupDecodeException, IndexError):
+        except (exceptions.WeatherGroupDecodeException, IndexError):
             parts = parts[i:]
         self.weather_groups = tuple(t)
 
@@ -80,22 +81,22 @@ class Report:
         i = 0
         try:
             while True:
-                t.append(SkyCondition(parts[i]))
+                t.append(aviation_weather.SkyCondition(parts[i]))
                 i += 1
-        except (SkyConditionDecodeException, IndexError):
+        except (exceptions.SkyConditionDecodeException, IndexError):
             parts = parts[i:]
         self.sky_conditions = tuple(t)
 
         try:
-            self.temperature = Temperature(parts[0])
-        except (TemperatureDecodeException, IndexError):
+            self.temperature = aviation_weather.Temperature(parts[0])
+        except (exceptions.TemperatureDecodeException, IndexError):
             self.temperature = None
         else:
             parts = parts[1:]
 
         try:
-            self.altimeter_setting = Pressure(parts[0])
-        except (PressureDecodeException, IndexError):
+            self.altimeter_setting = aviation_weather.Pressure(parts[0])
+        except (exceptions.PressureDecodeException, IndexError):
             self.altimeter_setting = None
 
         body = [self.type, self.station, self.time, self.modifier, self.wind, self.visibility,
@@ -107,7 +108,7 @@ class Report:
         if not text:
             return []
         else:
-            return [Remarks(text)]  # TODO: consider more detail from remarks?
+            return [aviation_weather.Remarks(text)]  # TODO: consider more detail from remarks?
 
     @staticmethod
     def retrieve(code):

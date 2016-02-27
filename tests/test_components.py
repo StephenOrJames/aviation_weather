@@ -1,6 +1,10 @@
 import unittest
-from aviation_weather.weather import *
 
+from aviation_weather import *
+from aviation_weather.exceptions import *
+
+
+# TODO: Split into individual test cases for each component
 
 class TestWeather(unittest.TestCase):
     """Unit tests for the various weather parsers"""

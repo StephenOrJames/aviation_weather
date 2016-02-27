@@ -1,5 +1,5 @@
 import unittest
-from aviation_weather.weather.weather import *
+from aviation_weather.weather import *
 
 
 class TestWeather(unittest.TestCase):

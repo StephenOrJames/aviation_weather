@@ -15,7 +15,7 @@ class Report:
     def __str__(self):
         raw = " ".join((str(part) for part in self.body))
         if self.remarks:
-            raw += " RMK " + " ".join((str(part) for part in self.remarks))
+            raw += " RMK " + " ".join(str(part) for part in self.remarks)
         return raw
 
     def _parse_body(self, text):

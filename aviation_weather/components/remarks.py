@@ -7,7 +7,7 @@ class Remarks:
         if raw.startswith("RMK "):
             self.text = raw[4:]
         else:
-            raise RemarksDecodeException
+            raise RemarksDecodeException("Remarks(%s) could not be parsed" % raw)
 
     def __str__(self):
         return "RMK " + self.text

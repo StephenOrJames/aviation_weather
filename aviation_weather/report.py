@@ -5,9 +5,11 @@ import aviation_weather.exceptions as exceptions
 
 
 class Report:
+
     def __init__(self, raw):
         if " RMK " in raw:
             body, remarks = raw.split(" RMK ", 1)
+            remarks = "RMK " + remarks  # re-add RMK so it gets parsed properly
         else:
             body, remarks = raw, None
         self.body = self._parse_body(body)
@@ -16,7 +18,7 @@ class Report:
     def __str__(self):
         raw = " ".join((str(part) for part in self.body))
         if self.remarks:
-            raw += " RMK " + " ".join(str(part) for part in self.remarks)
+            raw += " " + " ".join(str(part) for part in self.remarks)
         return raw
 
     def _parse_body(self, text):

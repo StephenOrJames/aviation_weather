@@ -18,6 +18,11 @@ class PressureDecodeException(ComponentDecodeException):
     pass
 
 
+class RemarksDecodeException(ComponentDecodeException):
+    """Remarks could not be decoded"""
+    pass
+
+
 class RunwayVisualRangeDecodeException(ComponentDecodeException):
     """Runway visual range could not be decoded"""
     pass

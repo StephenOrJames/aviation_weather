@@ -24,12 +24,14 @@ class SkyCondition:
             raise SkyConditionDecodeException
         self.type = m.group("type")
         self.height = m.group("height")
+        if self.height:
+            self.height = int(m.group("height")) * 100
         self.cumulonimbus = m.group("cb")
 
     def __str__(self):
         raw = self.type
         if self.height:
-            raw += self.height
+            raw += "%03d" % (self.height // 100)
         if self.cumulonimbus:
             raw += "CB"
         return raw

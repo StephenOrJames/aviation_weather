@@ -10,16 +10,20 @@ class TestVisibility(unittest.TestCase):
         """Test valid visibilities"""
 
         tests = [
-            "1SM",
-            "20SM",
-            "1/2SM",
-            "M1/2SM",
-            "M1 1/4SM",
-            "9999",
-            "2000",
+            ("1SM", False, 1, "SM"),
+            ("20SM", False, 20, "SM"),
+            ("1/2SM", False, .5, "SM"),
+            ("M1/2SM", True, .5, "SM"),
+            ("M1 1/4SM", True, 1.25, "SM"),
+            ("9999", False, 9999, "m"),
+            ("2000", False, 2000, "m"),
         ]
         for test in tests:
-            self.assertEqual(test, str(Visibility(test)))
+            v = Visibility(test[0])
+            self.assertEqual(test[0], str(v))
+            self.assertEqual(test[1], v.is_less_than)
+            self.assertEqual(test[2], v.distance)
+            self.assertEqual(test[3], v.unit)
 
     def test_invalid(self):
         """Test invalid visibilities"""

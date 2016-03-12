@@ -14,16 +14,28 @@ class Wind:
         if not m:
             raise WindDecodeException
         self.direction = m.group("direction")
-        self.speed = m.group("speed")
+        if self.direction != "VRB":
+            self.direction = int(self.direction)
+        self.speed = int(m.group("speed"))
         self.gusts = m.group("gusts")
+        if self.gusts:
+            self.gusts = int(self.gusts)
         self.unit = m.group("unit")
         self.variable = (m.group("v_from"), m.group("v_to"))
+        if self.variable == (None, None):
+            self.variable = None
+        else:
+            self.variable = (int(m.group("v_from")), int(m.group("v_to")))
 
     def __str__(self):
-        raw = self.direction + self.speed
-        if self.gusts:
-            raw += "G" + self.gusts
+        if isinstance(self.direction, int):
+            raw = "%03d" % self.direction
+        else:
+            raw = self.direction
+        raw += "%02d" % self.speed
+        if self.gusts is not None:
+            raw += "G%02d" % self.gusts
         raw += self.unit
-        if all(self.variable):
-            raw += " " + self.variable[0] + "V" + self.variable[1]
+        if self.variable:
+            raw += " %03dV%03d" % self.variable
         return raw

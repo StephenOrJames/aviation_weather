@@ -29,7 +29,7 @@ class Visibility:
     def __str__(self):
         raw = "M" if self.is_less_than else ""
 
-        whole = int(self.distance // 1)
+        whole = self.distance // 1
         fraction = Fraction(self.distance % 1)
         if whole and fraction:
             raw += "%d %s" % (whole, fraction)

@@ -20,12 +20,18 @@ class TestTime(unittest.TestCase):
     def test_invalid(self):
         """Test invalid times"""
 
-        with self.assertRaises(TimeDecodeException):
-            Time("")  # Empty
-        with self.assertRaises(TimeDecodeException):
-            Time("ABCDEFZ")  # Definitely not a time
-        with self.assertRaises(TimeDecodeException):
-            Time("1851Z")  # Where's the date
+        tests = [
+            "",  # Empty
+            "ABCDEFZ",  # Definitely not a time
+            "1851Z",  # Where's the date?
+            "321456Z",  # Invalid day
+            "092507Z",  # Invalid hour
+            "122384Z"  # Invalid minute
+            ""
+        ]
+        for test in tests:
+            with self.assertRaises(TimeDecodeException):
+                Time(test)
 
 
 if __name__ == "__main__":

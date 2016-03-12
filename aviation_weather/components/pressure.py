@@ -3,6 +3,7 @@ from aviation_weather.exceptions import PressureDecodeException
 
 
 class Pressure:
+    """Represents pressure in either inches of mercury or hectopascals/millibars"""
 
     def __init__(self, raw):
         m = re.search(r"\b(?P<indicator>[AQ])(?P<value>\d{4})\b", raw)

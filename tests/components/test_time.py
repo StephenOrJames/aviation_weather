@@ -9,7 +9,13 @@ class TestTime(unittest.TestCase):
     def test_valid(self):
         """Test valid times"""
 
-        self.assertEqual("161851Z", str(Time("161851Z")))
+        time_str = "161851Z"
+        time_obj = Time(time_str)
+        self.assertEqual(time_str, str(time_obj))
+        self.assertEqual(time_obj.day, 16)
+        self.assertEqual(time_obj.hour, 18)
+        self.assertEqual(time_obj.minute, 51)
+        self.assertEqual(time_obj.timezone, "Z")
 
     def test_invalid(self):
         """Test invalid times"""

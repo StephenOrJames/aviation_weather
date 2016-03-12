@@ -1,58 +1,58 @@
-class DecodeException(Exception):
-    """Something could not be decoded"""
-    pass
-
-
-class ReportDecodeException(DecodeException):
-    """Report could not be decoded"""
-    pass
-
-
-class WeatherDecodeException(DecodeException):
+class WeatherDecodeException(Exception):
     """Weather could not be decoded"""
     pass
 
 
-class StationDecodeException(WeatherDecodeException):
-    """Weather station could not be decoded"""
+class ReportDecodeException(WeatherDecodeException):
+    """Report could not be decoded"""
     pass
 
 
-class TimeDecodeException(WeatherDecodeException):
-    """Time could not be decoded"""
+class ComponentDecodeException(WeatherDecodeException):
+    """Weather component could not be decoded"""
     pass
 
 
-class WindDecodeException(WeatherDecodeException):
-    """Wind could not be decoded"""
+class PressureDecodeException(ComponentDecodeException):
+    """Pressure could not be decoded"""
     pass
 
 
-class VisibilityDecodeException(WeatherDecodeException):
-    """Visibility could not be decoded"""
-    pass
-
-
-class RunwayVisualRangeDecodeException(WeatherDecodeException):
+class RunwayVisualRangeDecodeException(ComponentDecodeException):
     """Runway visual range could not be decoded"""
     pass
 
 
-class WeatherGroupDecodeException(WeatherDecodeException):
-    """Weather group could not be decoded"""
-    pass
-
-
-class SkyConditionDecodeException(WeatherDecodeException):
+class SkyConditionDecodeException(ComponentDecodeException):
     """Sky condition could not be decoded"""
     pass
 
 
-class TemperatureDecodeException(WeatherDecodeException):
+class StationDecodeException(ComponentDecodeException):
+    """Weather station could not be decoded"""
+    pass
+
+
+class TemperatureDecodeException(ComponentDecodeException):
     """Temperature and dew point could not be decoded"""
     pass
 
 
-class PressureDecodeException(WeatherDecodeException):
-    """Pressure could not be decoded"""
+class TimeDecodeException(ComponentDecodeException):
+    """Time could not be decoded"""
+    pass
+
+
+class VisibilityDecodeException(ComponentDecodeException):
+    """Visibility could not be decoded"""
+    pass
+
+
+class WeatherGroupDecodeException(ComponentDecodeException):
+    """Weather group could not be decoded"""
+    pass
+
+
+class WindDecodeException(ComponentDecodeException):
+    """Wind could not be decoded"""
     pass

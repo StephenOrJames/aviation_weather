@@ -8,7 +8,7 @@ class Station:
     def __init__(self, raw):
         m = re.search(r"\b(?P<id>[A-Z][A-Z0-9]{3})\b", raw.upper())
         if not m:
-            raise StationDecodeException
+            raise StationDecodeException("Station(%s) could not be parsed" % raw)
         self.identifier = m.group("id")
 
     def __str__(self):

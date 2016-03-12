@@ -21,7 +21,7 @@ class SkyCondition:
             raw
         )
         if not m:
-            raise SkyConditionDecodeException
+            raise SkyConditionDecodeException("SkyCondition(%s) could not be parsed" % raw)
         self.type = m.group("type")
         self.height = m.group("height")
         if self.height:

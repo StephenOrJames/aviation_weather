@@ -12,7 +12,7 @@ class RunwayVisualRange:
             raw
         )
         if not m:
-            raise RunwayVisualRangeDecodeException
+            raise RunwayVisualRangeDecodeException("RunwayVisualRange(%s) could not be parsed" % raw)
         self.runway = m.group("runway")
         if m.group("d_max"):
             self.distance = (m.group("d_min"), m.group("d_max"))

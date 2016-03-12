@@ -7,13 +7,15 @@ class Pressure:
     def __init__(self, raw):
         m = re.search(r"\b(?P<indicator>[AQ])(?P<value>\d{4})\b", raw)
         if not m:
-            raise PressureDecodeException
+            raise PressureDecodeException("Pressure(%s) could not be parsed" % raw)
         self.indicator = m.group("indicator")
         value = m.group("value")
         if self.indicator == "A":
             self.value = int(value) / 100
         elif self.indicator == "Q":
             self.value = int(value)
+        else:
+            raise PressureDecodeException("Pressure(%s) contains an invalid indicator" % raw)
 
     def __str__(self):
         if self.indicator == "A":

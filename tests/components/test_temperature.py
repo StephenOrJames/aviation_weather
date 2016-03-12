@@ -9,13 +9,23 @@ class TestTemperature(unittest.TestCase):
     def test_valid(self):
         """Test valid temperatures"""
 
-        tests = [
-            "21/12",
-            "21/M12",
-            "M01/M04",
-        ]
-        for test in tests:
-            self.assertEqual(test, str(Temperature(test)))
+        s = "21/12"
+        o = Temperature(s)
+        self.assertEqual(s, str(o))
+        self.assertEqual(o.temperature, 21)
+        self.assertEqual(o.dew_point, 12)
+
+        s = "21/M12"
+        o = Temperature(s)
+        self.assertEqual(s, str(o))
+        self.assertEqual(o.temperature, 21)
+        self.assertEqual(o.dew_point, -12)
+
+        s = "M01/M04"
+        o = Temperature(s)
+        self.assertEqual(s, str(o))
+        self.assertEqual(o.temperature, -1)
+        self.assertEqual(o.dew_point, -4)
 
     def test_invalid(self):
         """Test invalid temperatures"""

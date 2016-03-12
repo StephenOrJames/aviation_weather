@@ -8,12 +8,27 @@ class Temperature:
     def __init__(self, raw):
         m = re.search(r"\b(?P<temperature>M?\d{1,2})/(?P<dew_point>M?\d{1,2})?\b", raw)
         if not m:
-            raise TemperatureDecodeException
+            raise TemperatureDecodeException("Temperature(%s) could not be parsed" % raw)
         self.temperature = m.group("temperature")
         self.dew_point = m.group("dew_point")
+        if self.temperature.startswith("M"):
+            self.temperature = -int(self.temperature[1:])
+        else:
+            self.temperature = int(self.temperature)
+        if self.dew_point.startswith("M"):
+            self.dew_point = -int(self.dew_point[1:])
+        else:
+            self.dew_point = int(self.dew_point)
 
     def __str__(self):
-        raw = self.temperature + "/"
-        if self.dew_point:
-            raw += self.dew_point
+        raw = ""
+        if self.temperature < 0:
+            raw += "M%02d/" % -self.temperature
+        else:
+            raw += "%02d/" % self.temperature
+        if self.dew_point is not None:
+            if self.dew_point < 0:
+                raw += "M%02d" % -self.dew_point
+            else:
+                raw += "%02d" % self.dew_point
         return raw

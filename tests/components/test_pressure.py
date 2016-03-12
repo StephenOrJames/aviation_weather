@@ -9,8 +9,15 @@ class TestPressure(unittest.TestCase):
     def test_valid(self):
         """Test valid pressures"""
 
-        self.assertEqual("A2992", str(Pressure("A2992")))
-        self.assertEqual("Q1013", str(Pressure("Q1013")))
+        p = Pressure("A2992")
+        self.assertEqual(str(p), "A2992")
+        self.assertEqual(p.indicator, "A")
+        self.assertEqual(p.value, 29.92)
+
+        p = Pressure("Q1013")
+        self.assertEqual(str(p), "Q1013")
+        self.assertEqual(p.indicator, "Q")
+        self.assertEqual(p.value, 1013)
 
     def test_invalid(self):
         """Test invalid pressures"""

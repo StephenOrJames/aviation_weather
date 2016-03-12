@@ -9,7 +9,14 @@ class Pressure:
         if not m:
             raise PressureDecodeException
         self.indicator = m.group("indicator")
-        self.value = m.group("value")
+        value = m.group("value")
+        if self.indicator == "A":
+            self.value = int(value) / 100
+        elif self.indicator == "Q":
+            self.value = int(value)
 
     def __str__(self):
-        return self.indicator + self.value
+        if self.indicator == "A":
+            return "A%d" % int(self.value * 100)
+        elif self.indicator == "Q":
+            return "Q%d" % self.value

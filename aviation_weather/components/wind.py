@@ -12,7 +12,7 @@ class Wind:
             raw
         )
         if not m:
-            raise WindDecodeException
+            raise WindDecodeException("Wind(%s) could not be parsed" % raw)
         self.direction = m.group("direction")
         if self.direction != "VRB":
             self.direction = int(self.direction)

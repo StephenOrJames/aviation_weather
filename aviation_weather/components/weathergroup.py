@@ -68,7 +68,7 @@ class WeatherGroup:
         self.descriptor = m.group("descriptor")
         p = m.group("phenomenon")
         if p and len(p) > 2:
-            self.phenomenon = tuple((p[0 + i:2 + i] for i in range(0, len(p), 2)))
+            self.phenomenon = tuple((p[0+i:2+i] for i in range(0, len(p), 2)))
         else:
             self.phenomenon = p
 

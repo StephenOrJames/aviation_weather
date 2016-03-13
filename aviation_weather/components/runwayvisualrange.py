@@ -1,8 +1,10 @@
 import re
+
+from aviation_weather.components import _Component
 from aviation_weather.exceptions import RunwayVisualRangeDecodeError
 
 
-class RunwayVisualRange:
+class RunwayVisualRange(_Component):
     """Represents the runway visual range"""
 
     def __init__(self, raw):
@@ -21,7 +23,8 @@ class RunwayVisualRange:
         self.unit = m.group("unit") or "m"
         self.trend = m.group("trend")
 
-    def __str__(self):
+    @property
+    def raw(self):
         raw = "R" + self.runway + "/"
         if isinstance(self.distance, tuple):
             raw += "V".join(self.distance)

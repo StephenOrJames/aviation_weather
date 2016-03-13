@@ -1,8 +1,10 @@
 import re
+
+from aviation_weather.components import _Component
 from aviation_weather.exceptions import WeatherGroupDecodeError
 
 
-class WeatherGroup:
+class WeatherGroup(_Component):
     # TODO: see FMH-1 12.6.8 for specific formatting instructions
 
     INTENSITIES = {
@@ -72,7 +74,8 @@ class WeatherGroup:
         else:
             self.phenomenon = p
 
-    def __str__(self):
+    @property
+    def raw(self):
         raw = self.intensity
         if self.descriptor:
             raw += self.descriptor

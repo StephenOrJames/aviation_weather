@@ -1,8 +1,10 @@
 import re
+
+from aviation_weather.components import _Component
 from aviation_weather.exceptions import TemperatureDecodeError
 
 
-class Temperature:
+class Temperature(_Component):
     """The temperature (and dew point) group"""
 
     def __init__(self, raw):
@@ -20,7 +22,8 @@ class Temperature:
         else:
             self.dew_point = int(self.dew_point)
 
-    def __str__(self):
+    @property
+    def raw(self):
         raw = ""
         if self.temperature < 0:
             raw += "M%02d/" % -self.temperature

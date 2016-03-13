@@ -1,10 +1,11 @@
 import re
 from fractions import Fraction
 
+from aviation_weather.components import _Component
 from aviation_weather.exceptions import VisibilityDecodeError
 
 
-class Visibility:
+class Visibility(_Component):
 
     def __init__(self, raw):
         m = re.search(
@@ -26,7 +27,8 @@ class Visibility:
         else:
             self.distance = int(self.distance)
 
-    def __str__(self):
+    @property
+    def raw(self):
         raw = "M" if self.is_less_than else ""
 
         whole = self.distance // 1

@@ -1,8 +1,10 @@
 import re
+
+from aviation_weather.components import _Component
 from aviation_weather.exceptions import TimeDecodeError
 
 
-class Time:
+class Time(_Component):
 
     def __init__(self, raw):
         m = re.search(r"\b(?P<day>\d{2})(?P<hour>\d{2})(?P<minute>\d{2})(?P<timezone>Z)\b", raw)
@@ -22,5 +24,6 @@ class Time:
         if self.minute > 59:
             raise TimeDecodeError("Time(%s) contains an invalid minute" % raw)
 
-    def __str__(self):
+    @property
+    def raw(self):
         return "%02d%02d%02d%1s" % (self.day, self.hour, self.minute, self.timezone)

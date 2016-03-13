@@ -1,7 +1,8 @@
+from aviation_weather.components import _Component
 from aviation_weather.exceptions import RemarksDecodeError
 
 
-class Remarks:
+class Remarks(_Component):
 
     def __init__(self, raw):
         if raw.startswith("RMK "):
@@ -9,5 +10,6 @@ class Remarks:
         else:
             raise RemarksDecodeError("Remarks(%s) could not be parsed" % raw)
 
-    def __str__(self):
+    @property
+    def raw(self):
         return self.text

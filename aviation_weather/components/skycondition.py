@@ -1,8 +1,10 @@
 import re
+
+from aviation_weather.components import _Component
 from aviation_weather.exceptions import SkyConditionDecodeError
 
 
-class SkyCondition:
+class SkyCondition(_Component):
 
     TYPES = {
         "VV": "vertical visibility",
@@ -28,7 +30,8 @@ class SkyCondition:
             self.height = int(m.group("height")) * 100
         self.cumulonimbus = True if m.group("cb") else False
 
-    def __str__(self):
+    @property
+    def raw(self):
         raw = self.type
         if self.height:
             raw += "%03d" % (self.height // 100)

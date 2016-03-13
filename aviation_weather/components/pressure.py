@@ -1,8 +1,10 @@
 import re
+
+from aviation_weather.components import _Component
 from aviation_weather.exceptions import PressureDecodeError
 
 
-class Pressure:
+class Pressure(_Component):
     """Represents pressure in either inches of mercury or hectopascals/millibars"""
 
     def __init__(self, raw):
@@ -18,7 +20,8 @@ class Pressure:
         else:
             raise PressureDecodeError("Pressure(%s) contains an invalid indicator" % raw)
 
-    def __str__(self):
+    @property
+    def raw(self):
         if self.indicator == "A":
             return "A%d" % int(self.value * 100)
         elif self.indicator == "Q":

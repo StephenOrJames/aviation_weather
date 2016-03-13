@@ -15,33 +15,33 @@ class TestTime(unittest.TestCase):
         self.assertEqual(time_obj.minute, 51)
         self.assertEqual(time_obj.timezone, "Z")
 
-    def _invalid_tests(self, raw):
+    def _test_invalid(self, raw):
         with self.assertRaises(TimeDecodeException):
             Time(raw)
 
     def test_invalid_empty(self):
-        self._invalid_tests("")
+        self._test_invalid("")
 
     def test_invalid_letters(self):
-        self._invalid_tests("ABCDEFZ")
+        self._test_invalid("ABCDEFZ")
 
     def test_invalid_short(self):
-        self._invalid_tests("1851Z")
+        self._test_invalid("1851Z")
 
     def test_invalid_long(self):
-        self._invalid_tests("02101851Z")
+        self._test_invalid("02101851Z")
 
     def test_invalid_unit(self):
-        self._invalid_tests("101851A")
+        self._test_invalid("101851A")
 
     def test_invalid_day(self):
-        self._invalid_tests("321456Z")
+        self._test_invalid("321456Z")
 
     def test_invalid_hour(self):
-        self._invalid_tests("092507Z")
+        self._test_invalid("092507Z")
 
     def test_invalid_minute(self):
-        self._invalid_tests("122384Z")
+        self._test_invalid("122384Z")
 
 
 if __name__ == "__main__":

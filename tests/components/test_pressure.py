@@ -6,17 +6,17 @@ from aviation_weather.exceptions import PressureDecodeException
 class TestPressure(unittest.TestCase):
     """Unit tests for aviation_weather.components.pressure.Pressure"""
 
-    def _valid_tests(self, raw, indicator, value):
+    def _test_valid(self, raw, indicator, value):
         p = Pressure(raw)
         self.assertEqual(str(p), raw)
         self.assertEqual(p.indicator, indicator)
         self.assertEqual(p.value, value)
 
     def test_valid_altimeter(self):
-        self._valid_tests("A2992", "A", 29.92)
+        self._test_valid("A2992", "A", 29.92)
 
     def test_valid_QNH(self):
-        self._valid_tests("Q1013", "Q", 1013)
+        self._test_valid("Q1013", "Q", 1013)
 
     def test_invalid(self):
         with self.assertRaises(PressureDecodeException):

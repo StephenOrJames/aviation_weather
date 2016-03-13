@@ -1,6 +1,6 @@
 import unittest
 from aviation_weather import Remarks
-from aviation_weather.exceptions import RemarksDecodeException
+from aviation_weather.exceptions import RemarksDecodeError
 
 
 class TestRemarks(unittest.TestCase):
@@ -13,7 +13,7 @@ class TestRemarks(unittest.TestCase):
         self.assertEqual(s, r.text)
 
     def test_invalid(self):
-        with self.assertRaises(RemarksDecodeException):
+        with self.assertRaises(RemarksDecodeError):
             Remarks("AO2 PK WND 14027/1802 SLP183 P0018 T01170106")
 
 

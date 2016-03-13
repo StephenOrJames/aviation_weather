@@ -1,63 +1,63 @@
-class WeatherDecodeException(Exception):
+class WeatherDecodeError(ValueError):
     """Weather could not be decoded"""
     pass
 
 
-class ReportDecodeException(WeatherDecodeException):
+class ReportDecodeError(WeatherDecodeError):
     """Report could not be decoded"""
     pass
 
 
-class ComponentDecodeException(WeatherDecodeException):
+class ComponentDecodeError(WeatherDecodeError):
     """Weather component could not be decoded"""
     pass
 
 
-class PressureDecodeException(ComponentDecodeException):
+class PressureDecodeError(ComponentDecodeError):
     """Pressure could not be decoded"""
     pass
 
 
-class RemarksDecodeException(ComponentDecodeException):
+class RemarksDecodeError(ComponentDecodeError):
     """Remarks could not be decoded"""
     pass
 
 
-class RunwayVisualRangeDecodeException(ComponentDecodeException):
+class RunwayVisualRangeDecodeError(ComponentDecodeError):
     """Runway visual range could not be decoded"""
     pass
 
 
-class SkyConditionDecodeException(ComponentDecodeException):
+class SkyConditionDecodeError(ComponentDecodeError):
     """Sky condition could not be decoded"""
     pass
 
 
-class StationDecodeException(ComponentDecodeException):
+class StationDecodeError(ComponentDecodeError):
     """Weather station could not be decoded"""
     pass
 
 
-class TemperatureDecodeException(ComponentDecodeException):
+class TemperatureDecodeError(ComponentDecodeError):
     """Temperature and dew point could not be decoded"""
     pass
 
 
-class TimeDecodeException(ComponentDecodeException):
+class TimeDecodeError(ComponentDecodeError):
     """Time could not be decoded"""
     pass
 
 
-class VisibilityDecodeException(ComponentDecodeException):
+class VisibilityDecodeError(ComponentDecodeError):
     """Visibility could not be decoded"""
     pass
 
 
-class WeatherGroupDecodeException(ComponentDecodeException):
+class WeatherGroupDecodeError(ComponentDecodeError):
     """Weather group could not be decoded"""
     pass
 
 
-class WindDecodeException(ComponentDecodeException):
+class WindDecodeError(ComponentDecodeError):
     """Wind could not be decoded"""
     pass

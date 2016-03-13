@@ -1,5 +1,5 @@
 import re
-from aviation_weather.exceptions import RunwayVisualRangeDecodeException
+from aviation_weather.exceptions import RunwayVisualRangeDecodeError
 
 
 class RunwayVisualRange:
@@ -12,7 +12,7 @@ class RunwayVisualRange:
             raw
         )
         if not m:
-            raise RunwayVisualRangeDecodeException("RunwayVisualRange(%s) could not be parsed" % raw)
+            raise RunwayVisualRangeDecodeError("RunwayVisualRange(%s) could not be parsed" % raw)
         self.runway = m.group("runway")
         if m.group("d_max"):
             self.distance = (m.group("d_min"), m.group("d_max"))

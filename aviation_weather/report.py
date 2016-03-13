@@ -24,7 +24,7 @@ class Report:
     def _parse_body(self, text):
         parts = text.split()
         if len(parts) == 0:
-            raise exceptions.ReportDecodeException
+            raise exceptions.ReportDecodeError
 
         if parts[0] in ("METAR", "SPECI"):
             self.type = parts[0]
@@ -46,7 +46,7 @@ class Report:
 
         try:
             self.wind = aviation_weather.Wind(text)
-        except (exceptions.WindDecodeException, IndexError):
+        except (exceptions.WindDecodeError, IndexError):
             self.wind = None
             parts = parts[2:]
         else:
@@ -54,7 +54,7 @@ class Report:
 
         try:
             self.visibility = aviation_weather.Visibility(" ".join(parts[:2]))
-        except (exceptions.VisibilityDecodeException, IndexError):
+        except (exceptions.VisibilityDecodeError, IndexError):
             self.visibility = None
         else:
             parts = text.split(str(self.visibility), 1)[1].split()  # remove used parts
@@ -65,7 +65,7 @@ class Report:
             while True:
                 t.append(aviation_weather.RunwayVisualRange(parts[i]))
                 i += 1
-        except (exceptions.RunwayVisualRangeDecodeException, IndexError):
+        except (exceptions.RunwayVisualRangeDecodeError, IndexError):
             parts = parts[i:]
         self.runway_visual_range = tuple(t)
 
@@ -75,7 +75,7 @@ class Report:
             while True:
                 t.append(aviation_weather.WeatherGroup(parts[i]))
                 i += 1
-        except (exceptions.WeatherGroupDecodeException, IndexError):
+        except (exceptions.WeatherGroupDecodeError, IndexError):
             parts = parts[i:]
         self.weather_groups = tuple(t)
 
@@ -85,20 +85,20 @@ class Report:
             while True:
                 t.append(aviation_weather.SkyCondition(parts[i]))
                 i += 1
-        except (exceptions.SkyConditionDecodeException, IndexError):
+        except (exceptions.SkyConditionDecodeError, IndexError):
             parts = parts[i:]
         self.sky_conditions = tuple(t)
 
         try:
             self.temperature = aviation_weather.Temperature(parts[0])
-        except (exceptions.TemperatureDecodeException, IndexError):
+        except (exceptions.TemperatureDecodeError, IndexError):
             self.temperature = None
         else:
             parts = parts[1:]
 
         try:
             self.altimeter_setting = aviation_weather.Pressure(parts[0])
-        except (exceptions.PressureDecodeException, IndexError):
+        except (exceptions.PressureDecodeError, IndexError):
             self.altimeter_setting = None
 
         body = [self.type, self.station, self.time, self.modifier, self.wind, self.visibility,

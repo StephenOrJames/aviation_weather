@@ -1,6 +1,6 @@
 import unittest
 from aviation_weather import Wind
-from aviation_weather.exceptions import WindDecodeException
+from aviation_weather.exceptions import WindDecodeError
 
 
 class TestWind(unittest.TestCase):
@@ -36,7 +36,7 @@ class TestWind(unittest.TestCase):
         self._test_valid("14003KT 110V170", 140, 3, None, (110, 170))
 
     def _test_invalid(self, raw):
-        with self.assertRaises(WindDecodeException):
+        with self.assertRaises(WindDecodeError):
             Wind(raw)
 
     def test_invalid_empty(self):

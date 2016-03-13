@@ -1,5 +1,5 @@
 import re
-from aviation_weather.exceptions import SkyConditionDecodeException
+from aviation_weather.exceptions import SkyConditionDecodeError
 
 
 class SkyCondition:
@@ -21,7 +21,7 @@ class SkyCondition:
             raw
         )
         if not m:
-            raise SkyConditionDecodeException("SkyCondition(%s) could not be parsed" % raw)
+            raise SkyConditionDecodeError("SkyCondition(%s) could not be parsed" % raw)
         self.type = m.group("type")
         self.height = m.group("height")
         if self.height:

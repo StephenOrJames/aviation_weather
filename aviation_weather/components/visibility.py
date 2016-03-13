@@ -1,7 +1,7 @@
 import re
 from fractions import Fraction
 
-from aviation_weather.exceptions import VisibilityDecodeException
+from aviation_weather.exceptions import VisibilityDecodeError
 
 
 class Visibility:
@@ -12,7 +12,7 @@ class Visibility:
             raw
         )
         if not m:
-            raise VisibilityDecodeException("Visibility(%s) could not be parsed" % raw)
+            raise VisibilityDecodeError("Visibility(%s) could not be parsed" % raw)
         self.is_less_than = True if m.group("less") else False
         self.distance = m.group("distance1") or m.group("distance2")
         self.unit = m.group("unit") or "m"

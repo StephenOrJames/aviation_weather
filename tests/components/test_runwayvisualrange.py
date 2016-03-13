@@ -1,6 +1,6 @@
 import unittest
 from aviation_weather import RunwayVisualRange
-from aviation_weather.exceptions import RunwayVisualRangeDecodeException
+from aviation_weather.exceptions import RunwayVisualRangeDecodeError
 
 
 class TestRunwayVisualRange(unittest.TestCase):
@@ -30,7 +30,7 @@ class TestRunwayVisualRange(unittest.TestCase):
         self._test_valid("R09/1000VP6000FT", "09", ("1000", "P6000"), "FT", None)
 
     def _test_invalid(self, raw):
-        with self.assertRaises(RunwayVisualRangeDecodeException):
+        with self.assertRaises(RunwayVisualRangeDecodeError):
             RunwayVisualRange(raw)
 
     def test_invalid_empty(self):

@@ -1,5 +1,5 @@
 import re
-from aviation_weather.exceptions import WeatherGroupDecodeException
+from aviation_weather.exceptions import WeatherGroupDecodeError
 
 
 class WeatherGroup:
@@ -63,7 +63,7 @@ class WeatherGroup:
             raw
         )
         if not (m and (m.group("descriptor") or m.group("phenomenon"))):
-            raise WeatherGroupDecodeException("WeatherGroup(%s) could not be parsed" % raw)
+            raise WeatherGroupDecodeError("WeatherGroup(%s) could not be parsed" % raw)
         self.intensity = m.group("intensity") or ""  # Empty string for moderate intensity
         self.descriptor = m.group("descriptor")
         p = m.group("phenomenon")

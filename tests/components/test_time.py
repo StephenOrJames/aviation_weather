@@ -1,6 +1,6 @@
 import unittest
 from aviation_weather import Time
-from aviation_weather.exceptions import TimeDecodeException
+from aviation_weather.exceptions import TimeDecodeError
 
 
 class TestTime(unittest.TestCase):
@@ -16,7 +16,7 @@ class TestTime(unittest.TestCase):
         self.assertEqual(time_obj.timezone, "Z")
 
     def _test_invalid(self, raw):
-        with self.assertRaises(TimeDecodeException):
+        with self.assertRaises(TimeDecodeError):
             Time(raw)
 
     def test_invalid_empty(self):

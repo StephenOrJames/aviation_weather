@@ -1,6 +1,6 @@
 import unittest
 from aviation_weather import SkyCondition
-from aviation_weather.exceptions import SkyConditionDecodeException
+from aviation_weather.exceptions import SkyConditionDecodeError
 
 
 class TestSkyCondition(unittest.TestCase):
@@ -41,7 +41,7 @@ class TestSkyCondition(unittest.TestCase):
         self._test_valid("OVC015CB", "OVC", 1500, True)
 
     def _test_invalid(self, raw):
-        with self.assertRaises(SkyConditionDecodeException):
+        with self.assertRaises(SkyConditionDecodeError):
             SkyCondition(raw)
 
     def test_invalid_empty(self):

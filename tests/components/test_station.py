@@ -1,6 +1,6 @@
 import unittest
 from aviation_weather import Station
-from aviation_weather.exceptions import StationDecodeException
+from aviation_weather.exceptions import StationDecodeError
 
 
 class TestStation(unittest.TestCase):
@@ -18,7 +18,7 @@ class TestStation(unittest.TestCase):
         self._test_valid("K7R3")
 
     def _test_invalid(self, identifier):
-        with self.assertRaises(StationDecodeException):
+        with self.assertRaises(StationDecodeError):
             Station(identifier)
 
     def test_invalid_empty(self):

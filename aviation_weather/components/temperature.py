@@ -1,5 +1,5 @@
 import re
-from aviation_weather.exceptions import TemperatureDecodeException
+from aviation_weather.exceptions import TemperatureDecodeError
 
 
 class Temperature:
@@ -8,7 +8,7 @@ class Temperature:
     def __init__(self, raw):
         m = re.search(r"\b(?P<temperature>M?\d{1,2})/(?P<dew_point>M?\d{1,2})?\b", raw)
         if not m:
-            raise TemperatureDecodeException("Temperature(%s) could not be parsed" % raw)
+            raise TemperatureDecodeError("Temperature(%s) could not be parsed" % raw)
         self.temperature = m.group("temperature")
         self.dew_point = m.group("dew_point")
         if self.temperature.startswith("M"):

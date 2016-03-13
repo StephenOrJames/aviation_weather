@@ -1,6 +1,6 @@
 import unittest
 from aviation_weather import Visibility
-from aviation_weather.exceptions import VisibilityDecodeException
+from aviation_weather.exceptions import VisibilityDecodeError
 
 
 class TestVisibility(unittest.TestCase):
@@ -35,7 +35,7 @@ class TestVisibility(unittest.TestCase):
         self._test_valid("2000", False, 2000, "m")
 
     def _test_invalid(self, raw):
-        with self.assertRaises(VisibilityDecodeException):
+        with self.assertRaises(VisibilityDecodeError):
             Visibility(raw)
 
     def test_invalid_empty(self):

@@ -1,5 +1,5 @@
 import re
-from aviation_weather.exceptions import WindDecodeException
+from aviation_weather.exceptions import WindDecodeError
 
 
 class Wind:
@@ -12,7 +12,7 @@ class Wind:
             raw
         )
         if not m:
-            raise WindDecodeException("Wind(%s) could not be parsed" % raw)
+            raise WindDecodeError("Wind(%s) could not be parsed" % raw)
         self.direction = m.group("direction")
         if self.direction != "VRB":
             self.direction = int(self.direction)

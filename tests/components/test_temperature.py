@@ -1,6 +1,6 @@
 import unittest
 from aviation_weather import Temperature
-from aviation_weather.exceptions import TemperatureDecodeException
+from aviation_weather.exceptions import TemperatureDecodeError
 
 
 class TestTemperature(unittest.TestCase):
@@ -22,7 +22,7 @@ class TestTemperature(unittest.TestCase):
         self._test_valid("M01/M04", -1, -4)
 
     def _test_invalid(self, raw):
-        with self.assertRaises(TemperatureDecodeException):
+        with self.assertRaises(TemperatureDecodeError):
             Temperature(raw)
 
     def test_invalid_no_numbers(self):

@@ -1,6 +1,6 @@
 import unittest
 from aviation_weather import WeatherGroup
-from aviation_weather.exceptions import WeatherGroupDecodeException
+from aviation_weather.exceptions import WeatherGroupDecodeError
 
 
 class TestWeatherGroup(unittest.TestCase):
@@ -32,7 +32,7 @@ class TestWeatherGroup(unittest.TestCase):
         self._test_valid("-RASN", "-", None, ("RA", "SN"))
 
     def _test_invalid(self, raw):
-        with self.assertRaises(WeatherGroupDecodeException):
+        with self.assertRaises(WeatherGroupDecodeError):
             WeatherGroup(raw)
 
     def test_invalid_empty(self):

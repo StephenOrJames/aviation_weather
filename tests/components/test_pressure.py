@@ -1,6 +1,6 @@
 import unittest
 from aviation_weather import Pressure
-from aviation_weather.exceptions import PressureDecodeException
+from aviation_weather.exceptions import PressureDecodeError
 
 
 class TestPressure(unittest.TestCase):
@@ -19,7 +19,7 @@ class TestPressure(unittest.TestCase):
         self._test_valid("Q1013", "Q", 1013)
 
     def test_invalid(self):
-        with self.assertRaises(PressureDecodeException):
+        with self.assertRaises(PressureDecodeError):
             Pressure("3000")  # no unit indicator; more likely visibility
 
 

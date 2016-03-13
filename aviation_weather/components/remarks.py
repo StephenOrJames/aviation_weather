@@ -1,4 +1,4 @@
-from aviation_weather.exceptions import RemarksDecodeException
+from aviation_weather.exceptions import RemarksDecodeError
 
 
 class Remarks:
@@ -7,7 +7,7 @@ class Remarks:
         if raw.startswith("RMK "):
             self.text = raw
         else:
-            raise RemarksDecodeException("Remarks(%s) could not be parsed" % raw)
+            raise RemarksDecodeError("Remarks(%s) could not be parsed" % raw)
 
     def __str__(self):
         return self.text

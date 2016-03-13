@@ -21,7 +21,9 @@ class _Component(object):
         return "%s(%r)" % (self.__class__.__name__, self.raw)
 
     def __str__(self):
-        return self.raw  # TODO: change to self.decoded after it is implemented on all components and tests are updated
+        # TODO: change to self.decoded or self.raw after it is implemented on all components and tests are updated
+        # TODO: "or self.raw" will support unparsed content (i.e. Remarks)
+        return self.raw
 
     @property
     def decoded(self):

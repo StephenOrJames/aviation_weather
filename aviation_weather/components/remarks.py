@@ -11,5 +11,9 @@ class Remarks(_Component):
             raise RemarksDecodeError("Remarks(%s) could not be parsed" % raw)
 
     @property
+    def decoded(self):
+        return ""  # We technically don't parse remarks.
+
+    @property
     def raw(self):
         return self.text

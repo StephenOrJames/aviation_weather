@@ -53,7 +53,7 @@ class WeatherGroup:
         m = re.search(
             r"(?P<intensity>(?:%(intensities)s))?"
             r"(?P<descriptor>(?:%(descriptors)s))?"
-            r"(?P<phenomena>(?:%(phenomena)s){1,3})?\b"
+            r"(?P<phenomenon>(?:%(phenomena)s){1,3})?\b"
             %
             {
                 "intensities": "|".join(WeatherGroup.INTENSITIES).replace("+", "\+").replace("||", "|").strip("|"),
@@ -62,11 +62,11 @@ class WeatherGroup:
             },
             raw
         )
-        if not (m and (m.group("descriptor") or m.group("phenomena"))):
+        if not (m and (m.group("descriptor") or m.group("phenomenon"))):
             raise WeatherGroupDecodeException("WeatherGroup(%s) could not be parsed" % raw)
         self.intensity = m.group("intensity") or ""  # Empty string for moderate intensity
         self.descriptor = m.group("descriptor")
-        p = m.group("phenomena")
+        p = m.group("phenomenon")
         if p and len(p) > 2:
             self.phenomenon = tuple((p[0 + i:2 + i] for i in range(0, len(p), 2)))
         else:

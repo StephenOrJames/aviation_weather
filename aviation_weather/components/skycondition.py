@@ -26,7 +26,7 @@ class SkyCondition:
         self.height = m.group("height")
         if self.height:
             self.height = int(m.group("height")) * 100
-        self.cumulonimbus = m.group("cb")
+        self.cumulonimbus = True if m.group("cb") else False
 
     def __str__(self):
         raw = self.type

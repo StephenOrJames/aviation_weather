@@ -18,16 +18,16 @@ class RunwayVisualRange:
             self.distance = (m.group("d_min"), m.group("d_max"))
         else:
             self.distance = m.group("d_min")
-        self.unit = m.group("unit")
+        self.unit = m.group("unit") or "m"
         self.trend = m.group("trend")
 
     def __str__(self):
         raw = "R" + self.runway + "/"
         if isinstance(self.distance, tuple):
-            raw += self.distance[0] + "V" + self.distance[1]
+            raw += "V".join(self.distance)
         else:
             raw += self.distance
-        if self.unit:
+        if self.unit != "m":
             raw += self.unit
         if self.trend:
             raw += self.trend

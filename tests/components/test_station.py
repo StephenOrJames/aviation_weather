@@ -6,24 +6,32 @@ from aviation_weather.exceptions import StationDecodeException
 class TestStation(unittest.TestCase):
     """Unit tests for aviation_weather.components.station.Station"""
 
-    def test_valid(self):
-        """Test valid stations"""
+    def valid_tests(self, identifier):
+        s = Station(identifier)
+        self.assertEqual(identifier, str(s))
+        self.assertEqual(identifier, s.identifier)
 
-        self.assertEqual("KATL", str(Station("KATL")))  # 4-letter code
-        self.assertEqual("K7R3", str(Station("K7R3")))  # Alphanumeric code
+    def test_valid_4letter(self):
+        self.valid_tests("KATL")
 
-    def test_invalid(self):
-        """Test invalid stations"""
+    def test_valid_alphanumeric(self):
+        self.valid_tests("K7R3")
 
-        tests = [
-            "",  # Empty
-            "1234",  # Starts with a number
-            "Bad",  # Too short
-            "Worse",  # Too long
-        ]
-        for test in tests:
-            with self.assertRaises(StationDecodeException):
-                Station(test)
+    def invalid_tests(self, identifier):
+        with self.assertRaises(StationDecodeException):
+            Station(identifier)
+
+    def test_invalid_empty(self):
+        self.invalid_tests("")
+
+    def test_invalid_numbers(self):
+        self.invalid_tests("1234")
+
+    def test_invalid_short(self):
+        self.invalid_tests("Bad")
+
+    def test_invalid_long(self):
+        self.invalid_tests("Worse")
 
 
 if __name__ == "__main__":

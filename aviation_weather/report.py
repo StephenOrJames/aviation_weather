@@ -2,6 +2,7 @@ from urllib.error import HTTPError
 from urllib.request import urlopen
 import aviation_weather
 import aviation_weather.exceptions as exceptions
+from aviation_weather.exceptions import ReportDecodeError
 
 
 class Report:
@@ -15,8 +16,15 @@ class Report:
         self.body = self._parse_body(body)
         self.remarks = self._parse_remarks(remarks)
 
+    def __repr__(self):
+        return "%s(%r)" % (self.__class__.__name__, self.raw)
+
     def __str__(self):
-        raw = " ".join((str(part) for part in self.body))
+        return self.raw  # TODO: change to self.decoded (if and when it is implemented)
+
+    @property
+    def raw(self):
+        raw = " ".join((part.raw for part in self.body))
         if self.remarks:
             raw += " " + " ".join(str(part) for part in self.remarks)
         return raw
@@ -27,7 +35,7 @@ class Report:
             raise exceptions.ReportDecodeError
 
         if parts[0] in ("METAR", "SPECI"):
-            self.type = parts[0]
+            self.type = _Container(parts[0])
             parts = parts[1:]
         else:
             self.type = None
@@ -50,14 +58,14 @@ class Report:
             self.wind = None
             parts = parts[2:]
         else:
-            parts = " ".join(parts[2:]).split(str(self.wind), 1)[1].split()  # remove used parts
+            parts = " ".join(parts[2:]).split(self.wind.raw, 1)[1].split()  # remove used parts
 
         try:
             self.visibility = aviation_weather.Visibility(" ".join(parts[:2]))
         except (exceptions.VisibilityDecodeError, IndexError):
             self.visibility = None
         else:
-            parts = text.split(str(self.visibility), 1)[1].split()  # remove used parts
+            parts = text.split(self.visibility.raw, 1)[1].split()  # remove used parts
 
         t = list()
         i = 0
@@ -101,9 +109,15 @@ class Report:
         except (exceptions.PressureDecodeError, IndexError):
             self.altimeter_setting = None
 
+        end = " ".join(parts[1:])
+        if end:
+            end = _Container(end)
+        else:
+            end = None
+
         body = [self.type, self.station, self.time, self.modifier, self.wind, self.visibility,
                 *self.runway_visual_range, *self.weather_groups, *self.sky_conditions, self.temperature,
-                self.altimeter_setting, " ".join(parts[1:])]
+                self.altimeter_setting, end]
         return list(filter(None, body))
 
     def _parse_remarks(self, text):
@@ -121,3 +135,13 @@ class Report:
                 return Report(metar)
         except HTTPError:
             return None
+
+
+class _Container:
+    """Container for "unknown" elements within the report"""
+
+    def __init__(self, raw):
+        self.raw = raw
+
+    def __repr__(self):
+        return "report._Container(%r)" % self.raw

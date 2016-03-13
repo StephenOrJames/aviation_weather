@@ -8,7 +8,7 @@ class TestWind(unittest.TestCase):
 
     def _test_valid(self, raw, direction, speed, gusts, variable):
         w = Wind(raw)
-        self.assertEqual(raw, str(w))
+        self.assertEqual(w.raw, raw)
         self.assertEqual(w.direction, direction)
         self.assertEqual(w.speed, speed)
         self.assertEqual(w.gusts, gusts)

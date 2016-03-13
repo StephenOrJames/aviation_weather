@@ -8,7 +8,7 @@ class TestStation(unittest.TestCase):
 
     def _test_valid(self, identifier):
         s = Station(identifier)
-        self.assertEqual(identifier, str(s))
+        self.assertEqual(identifier, s.raw)
         self.assertEqual(identifier, s.identifier)
 
     def test_valid_4letter(self):

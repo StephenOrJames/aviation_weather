@@ -8,7 +8,7 @@ class TestRunwayVisualRange(unittest.TestCase):
 
     def _test_valid(self, raw, runway, distance, unit, trend):
         r = RunwayVisualRange(raw)
-        self.assertEqual(str(r), raw)
+        self.assertEqual(r.raw, raw)
         self.assertEqual(r.runway, runway)
         self.assertEqual(r.distance, distance)
         self.assertEqual(r.unit, unit)

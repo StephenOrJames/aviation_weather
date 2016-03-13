@@ -8,7 +8,7 @@ class TestWeatherGroup(unittest.TestCase):
 
     def _test_valid(self, raw, intensity, descriptor, phenomenon):
         w = WeatherGroup(raw)
-        self.assertEqual(str(w), raw)
+        self.assertEqual(w.raw, raw)
         self.assertEqual(w.intensity, intensity)
         self.assertEqual(w.descriptor, descriptor)
         self.assertEqual(w.phenomenon, phenomenon)

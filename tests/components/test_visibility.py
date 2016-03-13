@@ -8,7 +8,7 @@ class TestVisibility(unittest.TestCase):
 
     def _test_valid(self, raw, is_less_than, distance, unit):
         v = Visibility(raw)
-        self.assertEqual(str(v), raw)
+        self.assertEqual(v.raw, raw)
         self.assertEqual(v.is_less_than, is_less_than)
         self.assertEqual(v.distance, distance)
         self.assertEqual(v.unit, unit)

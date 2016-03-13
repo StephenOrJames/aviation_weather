@@ -8,7 +8,7 @@ class TestPressure(unittest.TestCase):
 
     def _test_valid(self, raw, indicator, value):
         p = Pressure(raw)
-        self.assertEqual(str(p), raw)
+        self.assertEqual(p.raw, raw)
         self.assertEqual(p.indicator, indicator)
         self.assertEqual(p.value, value)
 

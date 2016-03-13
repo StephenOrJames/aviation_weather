@@ -6,7 +6,7 @@ class TestReport(unittest.TestCase):
     """Unit tests for the Report parser"""
 
     def _test_parse(self, raw):
-        self.assertEqual(raw, str(Report(raw)))
+        self.assertEqual(raw, Report(raw).raw)
 
     def test_parse_KJFK(self):
         self._test_parse("KJFK 182151Z 28022G34KT 10SM SCT065 M04/M17 A2990 RMK AO2 "

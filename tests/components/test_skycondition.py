@@ -8,7 +8,7 @@ class TestSkyCondition(unittest.TestCase):
 
     def _test_valid(self, raw, type_, height, cumulonimbus):
         s = SkyCondition(raw)
-        self.assertEqual(str(s), raw)
+        self.assertEqual(s.raw, raw)
         self.assertEqual(s.type, type_)
         self.assertEqual(s.height, height)
         self.assertEqual(s.cumulonimbus, cumulonimbus)

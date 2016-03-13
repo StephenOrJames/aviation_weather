@@ -23,7 +23,7 @@ class _Component(object):
     def __str__(self):
         # TODO: change to self.decoded or self.raw after it is implemented on all components and tests are updated
         # TODO: "or self.raw" will support unparsed content (i.e. Remarks)
-        return self.raw
+        return self.decoded or self.raw
 
     @property
     def decoded(self):

@@ -105,9 +105,9 @@ class Report:
             parts = parts[1:]
 
         try:
-            self.altimeter_setting = aviation_weather.Pressure(parts[0])
+            self.pressure = aviation_weather.Pressure(parts[0])
         except (exceptions.PressureDecodeError, IndexError):
-            self.altimeter_setting = None
+            self.pressure = None
 
         end = " ".join(parts[1:])
         if end:
@@ -117,7 +117,7 @@ class Report:
 
         body = [self.type, self.station, self.time, self.modifier, self.wind, self.visibility,
                 *self.runway_visual_range, *self.weather_groups, *self.sky_conditions, self.temperature,
-                self.altimeter_setting, end]
+                self.pressure, end]
         return list(filter(None, body))
 
     def _parse_remarks(self, text):

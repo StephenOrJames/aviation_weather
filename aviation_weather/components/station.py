@@ -5,11 +5,10 @@ from aviation_weather.exceptions import StationDecodeError
 
 
 class Station(Component):
-    """Represents a weather station.
+    """The Station class represents a weather station.
 
     Attributes:
-        identifier (str): Stations are expected to have a four-character identifier. The first character of the
-            identifier is a letter, and the other three characters are alphanumeric.
+        identifier (str): A sequence of four characters, the first being a letter and the other three alphanumeric.
     """
 
     def __init__(self, raw: str):

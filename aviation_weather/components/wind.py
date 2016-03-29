@@ -8,6 +8,15 @@ class Wind(Component):
     # TODO: support conversion from KT to MPS (and vice versa)?
 
     def __init__(self, raw):
+        """Parse `raw` to create a new Wind object.
+
+        Args:
+            raw (str): The wind to be parsed.
+
+        Raises:
+            WindDecodeError: If `raw` could not be parsed.
+        """
+
         m = re.search(
             r"\b(?P<direction>(?:\d{3}|VRB))(?P<speed>\d{2,3})(?:G(?P<gusts>\d{2,3}))?(?P<unit>(?:KT|MPS))"
             r"(?: (?P<v_from>\d{3})V(?P<v_to>\d{3}))?\b",

@@ -5,9 +5,22 @@ from aviation_weather.exceptions import PressureDecodeError
 
 
 class Pressure(Component):
-    """Represents pressure in either inches of mercury or hectopascals/millibars"""
+    """The Pressure class represents atmospheric pressure in either inches of mercury or hectopascals/millibars.
 
-    def __init__(self, raw):
+    Attributes:
+        indicator (str): The indicator for the unit the pressure is expressed in.
+        value (int/float): The measure of the pressure in the unit indicated by `indicator`.
+    """
+
+    def __init__(self, raw: str):
+        """Parse `raw` to create a new Pressure object.
+
+        Args:
+            raw (str): The pressure to be parsed.
+
+        Raises:
+            PressureDecodeError: If `raw` could not be parsed.
+        """
         m = re.search(r"\b(?P<indicator>[AQ])(?P<value>\d{4})\b", raw)
         if not m:
             raise PressureDecodeError("Pressure(%s) could not be parsed" % raw)

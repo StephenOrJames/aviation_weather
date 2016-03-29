@@ -5,7 +5,7 @@ from aviation_weather.exceptions import TemperatureDecodeError
 
 
 class Temperature(Component):
-    """The temperature and dew point group
+    """The Temperature class represents a combined group of temperature and dew point.
 
     Attributes:
         temperature (int): The temperature in whole degrees Celcius.
@@ -16,10 +16,10 @@ class Temperature(Component):
         """Parse `raw` to create a new Temperature object.
 
         Args:
-            raw (str): The
+            raw (str): The temperature and dew point to be parsed.
 
         Raises:
-            TemperatureDecodeError: If the input could not be parsed.
+            TemperatureDecodeError: If `raw` could not be parsed.
         """
         m = re.search(r"\b(?P<temperature>M?\d{1,2})/(?P<dew_point>M?\d{1,2})?\b", raw)
         if not m:

@@ -52,6 +52,14 @@ class WeatherGroup(Component):
     }
 
     def __init__(self, raw):
+        """Parse `raw` to create a new WeatherGroup object.
+
+        Args:
+            raw (str): The weather group to be parsed.
+
+        Raises:
+            WeatherGroupDecodeError: If `raw` could not be parsed.
+        """
         m = re.search(
             r"(?P<intensity>(?:%(intensities)s))?"
             r"(?P<descriptor>(?:%(descriptors)s))?"

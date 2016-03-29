@@ -5,6 +5,14 @@ from aviation_weather.exceptions import RemarksDecodeError
 class Remarks(Component):
 
     def __init__(self, raw):
+        """Parse `raw` to create a new Remarks object.
+
+        Args:
+            raw (str): The remarks to be stored (not actually parsed at the moment).
+
+        Raises:
+            RemarksDecodeError: If `raw` could not be parsed.
+        """
         if raw.startswith("RMK "):
             self.text = raw
         else:

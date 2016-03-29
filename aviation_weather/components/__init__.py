@@ -29,11 +29,11 @@ class Component(object):
         return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
 
     @property
-    def decoded(self):
+    def decoded(self) -> str:
         """The component as a decoded (plain English) string"""
         raise NotImplementedError  # This should be overridden by all components.
 
     @property
-    def raw(self):
+    def raw(self) -> str:
         """The component as a raw (or encoded) string"""
         raise NotImplementedError  # This should be overridden by all components.

@@ -124,10 +124,18 @@ class Report(object):
         return list(filter(None, body))
 
     @staticmethod
-    def retrieve(code):
-        url = "http://weather.noaa.gov/pub/data/observations/metar/stations/%s.TXT"
+    def retrieve(code: str):
+        """Retrieve a METAR from NOAA.
+
+        Args:
+            code (str): The station identifier for which a METAR should be retrieved.
+
+        Returns:
+            A Report object, or None if a METAR could not be found.
+        """
+        URL = "http://weather.noaa.gov/pub/data/observations/metar/stations/%s.TXT"
         try:
-            with urlopen(url % code.upper()) as response:
+            with urlopen(URL % code.upper()) as response:
                 metar = response.read().decode('utf-8').splitlines()[1].strip()
                 return Report(metar)
         except HTTPError:
@@ -135,7 +143,7 @@ class Report(object):
 
 
 class _Container(object):
-    """Container for "unknown" elements within the report"""
+    """A container for "unknown" elements within the Report."""
 
     def __init__(self, raw):
         self.raw = raw

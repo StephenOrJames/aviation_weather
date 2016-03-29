@@ -5,8 +5,24 @@ from aviation_weather.exceptions import TimeDecodeError
 
 
 class Time(Component):
+    """The Time class represents the time and date associated with the weather.
+
+    Attributes:
+        day (int): The day associated with the weather.
+        hour (int): The hour associated with the weather.
+        minute (int): The minute associated wih the weather.
+        timezone (str): The timezone that `day`, `hour`, and `minute` are referenced in.
+    """
 
     def __init__(self, raw):
+        """Parse `raw` to create a new Time object.
+
+        Args:
+            raw (str): The time to be parsed.
+
+        Raises:
+            TimeDecodeError: If `raw` could not be parsed.
+        """
         m = re.search(r"\b(?P<day>\d{2})(?P<hour>\d{2})(?P<minute>\d{2})(?P<timezone>Z)\b", raw)
         if not m:
             raise TimeDecodeError("Time(%s) could not be parsed" % raw)

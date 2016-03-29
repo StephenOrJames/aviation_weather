@@ -8,6 +8,14 @@ class RunwayVisualRange(Component):
     """Represents the runway visual range"""
 
     def __init__(self, raw):
+        """Parse `raw` to create a new RunwayVisualRange object.
+
+        Args:
+            raw (str): The runway visual range to be parsed.
+
+        Raises:
+            RunwayVisualRangeDecodeError: If `raw` could not be parsed.
+        """
         m = re.search(
             r"\bR(?P<runway>\d{2}[LRC]?)/(?P<d_min>[PM]?\d{4})"
             r"(?:V(?P<d_max>[PM]?\d{4}))?(?P<unit>FT)?(?P<trend>[UND])?\b",

@@ -18,6 +18,14 @@ class SkyCondition(Component):
     }
 
     def __init__(self, raw):
+        """Parse `raw` to create a new SkyCondition object.
+
+        Args:
+            raw (str): The sky condition to be parsed.
+
+        Raises:
+            SkyConditionDecodeError: If `raw` could not be parsed.
+        """
         m = re.search(
             r"\b(?P<type>(?:%(types)s))(?P<height>\d{3})?(?P<cb>CB)?\b" % {"types": "|".join(SkyCondition.TYPES)},
             raw

@@ -8,6 +8,14 @@ from aviation_weather.exceptions import VisibilityDecodeError
 class Visibility(Component):
 
     def __init__(self, raw):
+        """Parse `raw` to create a new Visibility object.
+
+        Args:
+            raw (str): The visibility to be parsed.
+
+        Raises:
+            VisibilityDecodeError: If `raw` could not be parsed.
+        """
         m = re.search(
             r"\b(?:(?P<less>M)?(?P<distance1>\d[ \d/]{,4})(?P<unit>SM)|(?P=less)?(?P<distance2>\d{4}))\b",
             raw
@@ -15,17 +23,17 @@ class Visibility(Component):
         if not m:
             raise VisibilityDecodeError("Visibility(%s) could not be parsed" % raw)
         self.is_less_than = True if m.group("less") else False
-        self.distance = m.group("distance1") or m.group("distance2")
+        distance = m.group("distance1") or m.group("distance2")
         self.unit = m.group("unit") or "m"
 
-        if "/" in self.distance:
-            parts = self.distance.split(" ", 1)
+        if "/" in distance:
+            parts = distance.split(" ", 1)
             if len(parts) == 1:
                 self.distance = float(Fraction(parts[0]))
             else:
                 self.distance = int(parts[0]) + float(Fraction(parts[1]))
         else:
-            self.distance = int(self.distance)
+            self.distance = int(distance)
 
     @property
     def raw(self):

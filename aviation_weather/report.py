@@ -6,6 +6,22 @@ from aviation_weather.exceptions import ReportDecodeError
 
 
 class Report(object):
+    """The Report class represents a weather report.
+
+    Attributes:
+        type (_Container): The specified type of the Report.
+        station (Station): The station from which the report was produced.
+        time (Time): The time date at which the report was produced.
+        wind (Wind): The reported winds.
+        visibility (Visibility): The reported visibility.
+        runway_visual_range (tuple(RunwayVisualRange)): The reported runway visual ranges.
+        weather_groups (tuple(WeatherGroup)): The reported weather groups.
+        sky_conditions (tuple(SkyCondition)): The reported sky conditions.
+        temperature (Temperature): The reported temperature and dew point.
+        pressure (Pressure): The reported pressure.
+        remarks (Remarks): The remarks made in the report.
+    """
+    # TODO: complete docstring above
 
     def __init__(self, raw):
         if " RMK " in raw:
@@ -13,7 +29,7 @@ class Report(object):
             remarks = aviation_weather.Remarks("RMK " + remarks)  # re-add RMK so it gets parsed properly
         else:
             body, remarks = raw, None
-        self.body = self._parse_body(body)  # TODO: deprecate and eliminate self.body
+        self._body = self._parse_body(body)  # TODO: deprecate and eliminate self._body
         self.remarks = remarks
 
     def __repr__(self):
@@ -24,7 +40,7 @@ class Report(object):
 
     @property
     def raw(self):
-        raw = " ".join((part.raw for part in self.body))
+        raw = " ".join((part.raw for part in self._body))
         if self.remarks:
             raw += " " + self.remarks.raw
         return raw

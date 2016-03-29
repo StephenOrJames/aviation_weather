@@ -24,16 +24,16 @@ class Temperature(Component):
         m = re.search(r"\b(?P<temperature>M?\d{1,2})/(?P<dew_point>M?\d{1,2})?\b", raw)
         if not m:
             raise TemperatureDecodeError("Temperature(%s) could not be parsed" % raw)
-        self.temperature = m.group("temperature")
-        self.dew_point = m.group("dew_point")
-        if self.temperature.startswith("M"):
-            self.temperature = -int(self.temperature[1:])
+        temperature = m.group("temperature")
+        dew_point = m.group("dew_point")
+        if temperature.startswith("M"):
+            self.temperature = -int(temperature[1:])
         else:
-            self.temperature = int(self.temperature)
-        if self.dew_point.startswith("M"):
-            self.dew_point = -int(self.dew_point[1:])
+            self.temperature = int(temperature)
+        if dew_point.startswith("M"):
+            self.dew_point = -int(dew_point[1:])
         else:
-            self.dew_point = int(self.dew_point)
+            self.dew_point = int(dew_point)
 
     @property
     def raw(self):

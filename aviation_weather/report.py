@@ -5,16 +5,16 @@ import aviation_weather.exceptions as exceptions
 from aviation_weather.exceptions import ReportDecodeError
 
 
-class Report:
+class Report(object):
 
     def __init__(self, raw):
         if " RMK " in raw:
             body, remarks = raw.split(" RMK ", 1)
-            remarks = "RMK " + remarks  # re-add RMK so it gets parsed properly
+            remarks = aviation_weather.Remarks("RMK " + remarks)  # re-add RMK so it gets parsed properly
         else:
             body, remarks = raw, None
-        self.body = self._parse_body(body)
-        self.remarks = self._parse_remarks(remarks)
+        self.body = self._parse_body(body)  # TODO: deprecate and eliminate self.body
+        self.remarks = remarks
 
     def __repr__(self):
         return "%s(%r)" % (self.__class__.__name__, self.raw)
@@ -26,7 +26,7 @@ class Report:
     def raw(self):
         raw = " ".join((part.raw for part in self.body))
         if self.remarks:
-            raw += " " + " ".join(str(part) for part in self.remarks)
+            raw += " " + self.remarks.raw
         return raw
 
     def _parse_body(self, text):
@@ -75,7 +75,7 @@ class Report:
                 i += 1
         except (exceptions.RunwayVisualRangeDecodeError, IndexError):
             parts = parts[i:]
-        self.runway_visual_range = tuple(t)
+        self.runway_visual_range = tuple(t) or None
 
         t = list()
         i = 0
@@ -85,7 +85,7 @@ class Report:
                 i += 1
         except (exceptions.WeatherGroupDecodeError, IndexError):
             parts = parts[i:]
-        self.weather_groups = tuple(t)
+        self.weather_groups = tuple(t) or None
 
         t = list()
         i = 0
@@ -95,7 +95,7 @@ class Report:
                 i += 1
         except (exceptions.SkyConditionDecodeError, IndexError):
             parts = parts[i:]
-        self.sky_conditions = tuple(t)
+        self.sky_conditions = tuple(t) or None
 
         try:
             self.temperature = aviation_weather.Temperature(parts[0])
@@ -115,16 +115,13 @@ class Report:
         else:
             end = None
 
-        body = [self.type, self.station, self.time, self.modifier, self.wind, self.visibility,
-                *self.runway_visual_range, *self.weather_groups, *self.sky_conditions, self.temperature,
-                self.pressure, end]
+        body = [self.type, self.station, self.time, self.modifier, self.wind, self.visibility]
+        unpack = [self.runway_visual_range, self.weather_groups, self.sky_conditions]
+        for group in unpack:
+            if group:
+                body += list(group)
+        body += [self.temperature, self.pressure, end]
         return list(filter(None, body))
-
-    def _parse_remarks(self, text):
-        if not text:
-            return []
-        else:
-            return [aviation_weather.Remarks(text)]  # TODO: consider more detail from remarks?
 
     @staticmethod
     def retrieve(code):
@@ -137,7 +134,7 @@ class Report:
             return None
 
 
-class _Container:
+class _Container(object):
     """Container for "unknown" elements within the report"""
 
     def __init__(self, raw):

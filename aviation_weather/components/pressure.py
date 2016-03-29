@@ -1,10 +1,10 @@
 import re
 
-from aviation_weather.components import _Component
+from aviation_weather.components import Component
 from aviation_weather.exceptions import PressureDecodeError
 
 
-class Pressure(_Component):
+class Pressure(Component):
     """Represents pressure in either inches of mercury or hectopascals/millibars"""
 
     def __init__(self, raw):

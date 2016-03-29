@@ -1,10 +1,10 @@
 import re
 
-from aviation_weather.components import _Component
+from aviation_weather.components import Component
 from aviation_weather.exceptions import SkyConditionDecodeError
 
 
-class SkyCondition(_Component):
+class SkyCondition(Component):
 
     TYPES = {
         "VV": "vertical visibility",

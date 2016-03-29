@@ -1,10 +1,10 @@
 import re
 
-from aviation_weather.components import _Component
+from aviation_weather.components import Component
 from aviation_weather.exceptions import WeatherGroupDecodeError
 
 
-class WeatherGroup(_Component):
+class WeatherGroup(Component):
     # TODO: see FMH-1 12.6.8 for specific formatting instructions
 
     INTENSITIES = {

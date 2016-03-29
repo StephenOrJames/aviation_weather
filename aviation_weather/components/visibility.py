@@ -1,11 +1,11 @@
 import re
 from fractions import Fraction
 
-from aviation_weather.components import _Component
+from aviation_weather.components import Component
 from aviation_weather.exceptions import VisibilityDecodeError
 
 
-class Visibility(_Component):
+class Visibility(Component):
 
     def __init__(self, raw):
         m = re.search(

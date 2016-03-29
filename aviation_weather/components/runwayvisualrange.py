@@ -1,10 +1,10 @@
 import re
 
-from aviation_weather.components import _Component
+from aviation_weather.components import Component
 from aviation_weather.exceptions import RunwayVisualRangeDecodeError
 
 
-class RunwayVisualRange(_Component):
+class RunwayVisualRange(Component):
     """Represents the runway visual range"""
 
     def __init__(self, raw):

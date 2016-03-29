@@ -1,10 +1,10 @@
 import re
 
-from aviation_weather.components import _Component
+from aviation_weather.components import Component
 from aviation_weather.exceptions import WindDecodeError
 
 
-class Wind(_Component):
+class Wind(Component):
     # TODO: support conversion from KT to MPS (and vice versa)?
 
     def __init__(self, raw):

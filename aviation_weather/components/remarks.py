@@ -1,8 +1,8 @@
-from aviation_weather.components import _Component
+from aviation_weather.components import Component
 from aviation_weather.exceptions import RemarksDecodeError
 
 
-class Remarks(_Component):
+class Remarks(Component):
 
     def __init__(self, raw):
         if raw.startswith("RMK "):

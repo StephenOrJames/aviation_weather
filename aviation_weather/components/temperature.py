@@ -23,7 +23,7 @@ class Temperature(Component):
         """
         m = re.search(r"\b(?P<temperature>M?\d{1,2})/(?P<dew_point>M?\d{1,2})?\b", raw)
         if not m:
-            raise TemperatureDecodeError("Temperature(%s) could not be parsed" % raw)
+            raise TemperatureDecodeError("Temperature(%r) could not be parsed" % raw)
         temperature = m.group("temperature")
         dew_point = m.group("dew_point")
         if temperature.startswith("M"):

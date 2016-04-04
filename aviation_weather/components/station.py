@@ -22,7 +22,7 @@ class Station(Component):
         """
         m = re.search(r"\b(?P<id>[A-Z][A-Z0-9]{3})\b", raw.upper())
         if not m:
-            raise StationDecodeError("Station(%s) could not be parsed" % raw)
+            raise StationDecodeError("Station(%r) could not be parsed" % raw)
         self.identifier = m.group("id")
 
     @property

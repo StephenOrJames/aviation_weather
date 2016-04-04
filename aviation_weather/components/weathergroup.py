@@ -73,7 +73,7 @@ class WeatherGroup(Component):
             raw
         )
         if not (m and (m.group("descriptor") or m.group("phenomenon"))):
-            raise WeatherGroupDecodeError("WeatherGroup(%s) could not be parsed" % raw)
+            raise WeatherGroupDecodeError("WeatherGroup(%r) could not be parsed" % raw)
         self.intensity = m.group("intensity") or ""  # Empty string for moderate intensity
         self.descriptor = m.group("descriptor")
         p = m.group("phenomenon")

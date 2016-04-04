@@ -23,7 +23,7 @@ class Pressure(Component):
         """
         m = re.search(r"\b(?P<indicator>[AQ])(?P<value>\d{4})\b", raw)
         if not m:
-            raise PressureDecodeError("Pressure(%s) could not be parsed" % raw)
+            raise PressureDecodeError("Pressure(%r) could not be parsed" % raw)
         self.indicator = m.group("indicator")
         value = m.group("value")
         if self.indicator == "A":
@@ -31,7 +31,7 @@ class Pressure(Component):
         elif self.indicator == "Q":
             self.value = int(value)
         else:
-            raise PressureDecodeError("Pressure(%s) contains an invalid indicator" % raw)
+            raise PressureDecodeError("Pressure(%r) contains an invalid indicator" % raw)
 
     @property
     def raw(self):

@@ -31,7 +31,7 @@ class SkyCondition(Component):
             raw
         )
         if not m:
-            raise SkyConditionDecodeError("SkyCondition(%s) could not be parsed" % raw)
+            raise SkyConditionDecodeError("SkyCondition(%r) could not be parsed" % raw)
         self.type = m.group("type")
         self.height = m.group("height")
         if self.height:

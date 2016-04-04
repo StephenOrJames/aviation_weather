@@ -25,7 +25,7 @@ class Time(Component):
         """
         m = re.search(r"\b(?P<day>\d{2})(?P<hour>\d{2})(?P<minute>\d{2})(?P<timezone>Z)\b", raw)
         if not m:
-            raise TimeDecodeError("Time(%s) could not be parsed" % raw)
+            raise TimeDecodeError("Time(%r) could not be parsed" % raw)
 
         self.day = int(m.group("day"))
         self.hour = int(m.group("hour"))

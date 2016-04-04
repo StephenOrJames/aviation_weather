@@ -21,7 +21,7 @@ class Visibility(Component):
             raw
         )
         if not m:
-            raise VisibilityDecodeError("Visibility(%s) could not be parsed" % raw)
+            raise VisibilityDecodeError("Visibility(%r) could not be parsed" % raw)
         self.is_less_than = True if m.group("less") else False
         distance = m.group("distance1") or m.group("distance2")
         self.unit = m.group("unit") or "m"

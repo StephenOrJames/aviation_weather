@@ -16,7 +16,7 @@ class Remarks(Component):
         if raw.startswith("RMK "):
             self.text = raw
         else:
-            raise RemarksDecodeError("Remarks(%s) could not be parsed" % raw)
+            raise RemarksDecodeError("Remarks(%r) could not be parsed" % raw)
 
     @property
     def decoded(self):

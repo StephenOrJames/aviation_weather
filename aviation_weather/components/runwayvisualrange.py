@@ -22,7 +22,7 @@ class RunwayVisualRange(Component):
             raw
         )
         if not m:
-            raise RunwayVisualRangeDecodeError("RunwayVisualRange(%s) could not be parsed" % raw)
+            raise RunwayVisualRangeDecodeError("RunwayVisualRange(%r) could not be parsed" % raw)
         self.runway = m.group("runway")
         if m.group("d_max"):
             self.distance = (m.group("d_min"), m.group("d_max"))

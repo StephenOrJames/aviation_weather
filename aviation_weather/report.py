@@ -29,7 +29,7 @@ class Report(object):
             remarks = aviation_weather.Remarks("RMK " + remarks)  # re-add RMK so it gets parsed properly
         else:
             body, remarks = raw, None
-        self._body = self._parse_body(body)  # TODO: deprecate and eliminate self._body
+        self._parse_body(body)
         self.remarks = remarks
 
     def __repr__(self):
@@ -40,10 +40,33 @@ class Report(object):
 
     @property
     def raw(self):
-        raw = " ".join((part.raw for part in self._body))
+        raw = ""
+        if self.type:
+            raw += "%s " % self.type.raw
+        if self.modifier:
+            raw += "%s " % self.modifier
+        raw += "%s " % self.station.raw
+        raw += "%s " % self.time.raw
+        raw += "%s " % self.wind.raw
+        raw += "%s " % self.visibility.raw
+        if self.runway_visual_range:
+            for rvr in self.runway_visual_range:
+                raw += "%s " % rvr.raw
+        if self.weather_groups:
+            for wg in self.weather_groups:
+                raw += "%s " % wg.raw
+        if self.sky_conditions:
+            for sc in self.sky_conditions:
+                raw += "%s " % sc.raw
+        if self.temperature:
+            raw += "%s " % self.temperature.raw
+        if self.pressure:
+            raw += "%s " % self.pressure.raw
         if self.remarks:
-            raw += " " + self.remarks.raw
-        return raw
+            raw += "%s " % self.remarks.raw
+        if self._end:
+            raw += "%s " % self._end.raw
+        return raw.strip()
 
     def _parse_body(self, text):
         parts = text.split()
@@ -130,14 +153,7 @@ class Report(object):
             end = _Container(end)
         else:
             end = None
-
-        body = [self.type, self.station, self.time, self.modifier, self.wind, self.visibility]
-        unpack = [self.runway_visual_range, self.weather_groups, self.sky_conditions]
-        for group in unpack:
-            if group:
-                body += list(group)
-        body += [self.temperature, self.pressure, end]
-        return list(filter(None, body))
+        self._end = end
 
     @staticmethod
     def retrieve(code: str):

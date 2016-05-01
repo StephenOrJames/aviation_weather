@@ -31,6 +31,9 @@ class TestWeatherGroup(unittest.TestCase):
     def test_valid_light_rain_snow(self):
         self._test_valid("-RASN", "-", None, ("RA", "SN"))
 
+    def test_valid_no_significant_weather(self):
+        self._test_valid("NSW", "", "NSW", None)
+
     def _test_invalid(self, raw):
         with self.assertRaises(WeatherGroupDecodeError):
             WeatherGroup(raw)

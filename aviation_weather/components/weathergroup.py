@@ -21,7 +21,8 @@ class WeatherGroup(Component):
         "MI": "shallow",
         "PR": "partial",
         "SH": "shower(s)",
-        "TS": "thunderstorm"
+        "TS": "thunderstorm",
+        "NSW": "no significant weather"
     }
     PHENOMENA = {
         # Precipitation

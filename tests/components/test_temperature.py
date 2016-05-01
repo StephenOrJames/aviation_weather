@@ -8,9 +8,9 @@ class TestTemperature(unittest.TestCase):
 
     def _test_valid(self, raw, temperature, dew_point):
         t = Temperature(raw)
-        self.assertEqual(t.raw, raw)
-        self.assertEqual(t.temperature, temperature)
-        self.assertEqual(t.dew_point, dew_point)
+        self.assertEqual(raw, t.raw)
+        self.assertEqual(temperature, t.temperature)
+        self.assertEqual(dew_point, t.dew_point)
 
     def test_valid_positive_positive(self):
         self._test_valid("21/12", 21, 12)

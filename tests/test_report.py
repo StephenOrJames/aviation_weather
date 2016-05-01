@@ -20,18 +20,18 @@ class TestReport(unittest.TestCase):
                     weather_groups, sky_conditions, temperature, pressure, remarks):
         report = Report(raw)
 
-        self.assertEqual(report.raw, raw)
+        self.assertEqual(raw, report.raw)
         # TODO: assert report.type and report.modifier
-        self.assertEqual(report.location, location)
-        self.assertEqual(report.time, time)
-        self.assertEqual(report.wind, wind)
-        self.assertEqual(report.visibility, visibility)
-        self.assertEqual(report.runway_visual_range, runway_visual_range)
-        self.assertEqual(report.weather_groups, weather_groups)
-        self.assertEqual(report.sky_conditions, sky_conditions)
-        self.assertEqual(report.temperature, temperature)
-        self.assertEqual(report.pressure, pressure)
-        self.assertEqual(report.remarks, remarks)
+        self.assertEqual(location, report.location)
+        self.assertEqual(time, report.time)
+        self.assertEqual(wind, report.wind)
+        self.assertEqual(visibility, report.visibility)
+        self.assertEqual(runway_visual_range, report.runway_visual_range)
+        self.assertEqual(weather_groups, report.weather_groups)
+        self.assertEqual(sky_conditions, report.sky_conditions)
+        self.assertEqual(temperature, report.temperature)
+        self.assertEqual(pressure, report.pressure)
+        self.assertEqual(remarks, report.remarks)
 
     def test_parse_KJFK(self):
         self._test_parse(

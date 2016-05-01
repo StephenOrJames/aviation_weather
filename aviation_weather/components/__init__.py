@@ -1,4 +1,5 @@
 __all__ = [
+    "forecastgroup"
     "pressure",
     "remarks",
     "runwayvisualrange",
@@ -10,8 +11,6 @@ __all__ = [
     "weathergroup",
     "wind"
 ]
-
-# TODO: Change tests and Report to use component.raw instead of str(component)
 
 
 class Component(object):

@@ -8,11 +8,11 @@ class TestWind(unittest.TestCase):
 
     def _test_valid(self, raw, direction, speed, gusts, variable):
         w = Wind(raw)
-        self.assertEqual(w.raw, raw)
-        self.assertEqual(w.direction, direction)
-        self.assertEqual(w.speed, speed)
-        self.assertEqual(w.gusts, gusts)
-        self.assertEqual(w.variable, variable)
+        self.assertEqual(raw, w.raw)
+        self.assertEqual(direction, w.direction)
+        self.assertEqual(speed, w.speed)
+        self.assertEqual(gusts, w.gusts)
+        self.assertEqual(variable, w.variable)
 
     def test_valid_simpleKT(self):
         self._test_valid("35007KT", 350, 7, None, None)

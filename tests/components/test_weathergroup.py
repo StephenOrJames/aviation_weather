@@ -8,10 +8,10 @@ class TestWeatherGroup(unittest.TestCase):
 
     def _test_valid(self, raw, intensity, descriptor, phenomenon):
         w = WeatherGroup(raw)
-        self.assertEqual(w.raw, raw)
-        self.assertEqual(w.intensity, intensity)
-        self.assertEqual(w.descriptor, descriptor)
-        self.assertEqual(w.phenomenon, phenomenon)
+        self.assertEqual(raw, w.raw)
+        self.assertEqual(intensity, w.intensity)
+        self.assertEqual(descriptor, w.descriptor)
+        self.assertEqual(phenomenon, w.phenomenon)
 
     def test_valid_mist(self):
         self._test_valid("BR", "", None, "BR")

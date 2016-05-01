@@ -8,9 +8,9 @@ class TestPressure(unittest.TestCase):
 
     def _test_valid(self, raw, indicator, value):
         p = Pressure(raw)
-        self.assertEqual(p.raw, raw)
-        self.assertEqual(p.indicator, indicator)
-        self.assertEqual(p.value, value)
+        self.assertEqual(raw, p.raw)
+        self.assertEqual(indicator, p.indicator)
+        self.assertEqual(value, p.value)
 
     def test_valid_altimeter(self):
         self._test_valid("A2992", "A", 29.92)

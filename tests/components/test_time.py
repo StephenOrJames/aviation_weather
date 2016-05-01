@@ -9,11 +9,11 @@ class TestTime(unittest.TestCase):
     def test_valid(self):
         time_str = "161851Z"
         time_obj = Time(time_str)
-        self.assertEqual(time_obj.raw, time_str)
-        self.assertEqual(time_obj.day, 16)
-        self.assertEqual(time_obj.hour, 18)
-        self.assertEqual(time_obj.minute, 51)
-        self.assertEqual(time_obj.timezone, "Z")
+        self.assertEqual(time_str, time_obj.raw)
+        self.assertEqual(16, time_obj.day)
+        self.assertEqual(18, time_obj.hour)
+        self.assertEqual(51, time_obj.minute)
+        self.assertEqual("Z", time_obj.timezone)
 
     def _test_invalid(self, raw):
         with self.assertRaises(TimeDecodeError):

@@ -8,11 +8,11 @@ class TestRunwayVisualRange(unittest.TestCase):
 
     def _test_valid(self, raw, runway, distance, unit, trend):
         r = RunwayVisualRange(raw)
-        self.assertEqual(r.raw, raw)
-        self.assertEqual(r.runway, runway)
-        self.assertEqual(r.distance, distance)
-        self.assertEqual(r.unit, unit)
-        self.assertEqual(r.trend, trend)
+        self.assertEqual(raw, r.raw)
+        self.assertEqual(runway, r.runway)
+        self.assertEqual(distance, r.distance)
+        self.assertEqual(unit, r.unit)
+        self.assertEqual(trend, r.trend)
 
     def test_valid_1(self):
         self._test_valid("R12/2000", "12", "2000", "m", None)

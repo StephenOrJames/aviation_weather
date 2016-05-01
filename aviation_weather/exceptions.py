@@ -33,8 +33,8 @@ class SkyConditionDecodeError(ComponentDecodeError):
     pass
 
 
-class StationDecodeError(ComponentDecodeError):
-    """Weather station could not be decoded"""
+class LocationDecodeError(ComponentDecodeError):
+    """Location could not be decoded"""
     pass
 
 

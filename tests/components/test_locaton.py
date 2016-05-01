@@ -1,15 +1,15 @@
 import unittest
-from aviation_weather import Station
-from aviation_weather.exceptions import StationDecodeError
+from aviation_weather import Location
+from aviation_weather.exceptions import LocationDecodeError
 
 
-class TestStation(unittest.TestCase):
-    """Unit tests for aviation_weather.components.station.Station"""
+class TestLocation(unittest.TestCase):
+    """Unit tests for aviation_weather.components.location.Location"""
 
     def _test_valid(self, identifier):
-        s = Station(identifier)
-        self.assertEqual(identifier, s.raw)
-        self.assertEqual(identifier, s.identifier)
+        location = Location(identifier)
+        self.assertEqual(identifier, location.raw)
+        self.assertEqual(identifier, location.identifier)
 
     def test_valid_4letter(self):
         self._test_valid("KATL")
@@ -18,8 +18,8 @@ class TestStation(unittest.TestCase):
         self._test_valid("K7R3")
 
     def _test_invalid(self, identifier):
-        with self.assertRaises(StationDecodeError):
-            Station(identifier)
+        with self.assertRaises(LocationDecodeError):
+            Location(identifier)
 
     def test_invalid_empty(self):
         self._test_invalid("")

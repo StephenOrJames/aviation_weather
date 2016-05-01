@@ -1,9 +1,9 @@
 __all__ = [
+    "location",
     "pressure",
     "remarks",
     "runwayvisualrange",
     "skycondition",
-    "station",
     "temperature",
     "time",
     "visibility",

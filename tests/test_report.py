@@ -4,7 +4,7 @@ from aviation_weather.components.pressure import Pressure
 from aviation_weather.components.remarks import Remarks
 from aviation_weather.components.runwayvisualrange import RunwayVisualRange
 from aviation_weather.components.skycondition import SkyCondition
-from aviation_weather.components.station import Station
+from aviation_weather.components.location import Location
 from aviation_weather.components.temperature import Temperature
 from aviation_weather.components.time import Time
 from aviation_weather.components.visibility import Visibility
@@ -16,13 +16,13 @@ from aviation_weather.report import Report
 class TestReport(unittest.TestCase):
     """Unit tests for the Report parser"""
 
-    def _test_parse(self, raw, station, time, wind, visibility, runway_visual_range,
+    def _test_parse(self, raw, location, time, wind, visibility, runway_visual_range,
                     weather_groups, sky_conditions, temperature, pressure, remarks):
         report = Report(raw)
 
         self.assertEqual(report.raw, raw)
         # TODO: assert report.type and report.modifier
-        self.assertEqual(report.station, station)
+        self.assertEqual(report.location, location)
         self.assertEqual(report.time, time)
         self.assertEqual(report.wind, wind)
         self.assertEqual(report.visibility, visibility)
@@ -37,7 +37,7 @@ class TestReport(unittest.TestCase):
         self._test_parse(
             raw=("KJFK 182151Z 28022G34KT 10SM SCT065 M04/M17 A2990 RMK AO2 "
                  "PK WND 30034/2145 SLP123 VIRGA OHD AND E-SE T10391167"),
-            station=Station("KJFK"),
+            location=Location("KJFK"),
             time=Time("182151Z"),
             wind=Wind("28022G34KT"),
             visibility=Visibility("10SM"),
@@ -52,7 +52,7 @@ class TestReport(unittest.TestCase):
     def test_parse_MKJP(self):
         self._test_parse(
             raw="MKJP 182300Z 14014KT 9999 SCT022 28/22 Q1015",
-            station=Station("MKJP"),
+            location=Location("MKJP"),
             time=Time("182300Z"),
             wind=Wind("14014KT"),
             visibility=Visibility("9999"),
@@ -68,7 +68,7 @@ class TestReport(unittest.TestCase):
         self._test_parse(
             raw=("METAR LBBG 041600Z 12003MPS 290V310 1400 R04/P1500N R22/P1500U "
                  "+SN BKN022 OVC050 M04/M07 Q1020 NOSIG 8849//91="),
-            station=Station("LBBG"),
+            location=Location("LBBG"),
             time=Time("041600Z"),
             wind=Wind("12003MPS 290V310"),
             visibility=Visibility("1400"),
@@ -84,7 +84,7 @@ class TestReport(unittest.TestCase):
         self._test_parse(
             raw=("METAR KTTN 051853Z 04011KT 1/2SM VCTS SN FZFG BKN003 OVC010 "
                  "M02/M02 A3006 RMK AO2 TSB40 SLP176 P0002 T10171017="),
-            station=Station("KTTN"),
+            location=Location("KTTN"),
             time=Time("051853Z"),
             wind=Wind("04011KT"),
             visibility=Visibility("1/2SM"),
@@ -99,7 +99,7 @@ class TestReport(unittest.TestCase):
     def test_parse_KSLC(self):
         self._test_parse(
             raw="KSLC 192353Z 30004KT 10SM CLR 29/02 A3000 RMK AO2 SLP110 T02940017 10306 20261 56014",
-            station=Station("KSLC"),
+            location=Location("KSLC"),
             time=Time("192353Z"),
             wind=Wind("30004KT"),
             visibility=Visibility("10SM"),
@@ -115,7 +115,7 @@ class TestReport(unittest.TestCase):
         self._test_parse(
             raw=("KAZO 270257Z 26013KT 1 3/4SM R35/4500VP6000FT -SN BKN016 "
                  "OVC022 M02/M06 A3009 RMK AO2 P0000 T10221056"),
-            station=Station("KAZO"),
+            location=Location("KAZO"),
             time=Time("270257Z"),
             wind=Wind("26013KT"),
             visibility=Visibility("1 3/4SM"),
@@ -131,7 +131,7 @@ class TestReport(unittest.TestCase):
         self._test_parse(
             raw=("SPECI TJSJ 270256Z 12003KT 10SM FEW020 SCT036 BKN095 24/22 A3013 "
                  "RMK AO2 RAB06E37 SLP203 SHRA DSNT W P0024 60026 T02440222 50005"),
-            station=Station("TJSJ"),
+            location=Location("TJSJ"),
             time=Time("270256Z"),
             wind=Wind("12003KT"),
             visibility=Visibility("10SM"),
@@ -146,7 +146,7 @@ class TestReport(unittest.TestCase):
     def test_parse_EIDW(self):
         self._test_parse(
             raw="EIDW 092307Z 24035G55KT 210V270 1700 +SHRA BKN007 OVC015CB 08/07",
-            station=Station("EIDW"),
+            location=Location("EIDW"),
             time=Time("092307Z"),
             wind=Wind("24035G55KT 210V270"),
             visibility=Visibility("1700"),

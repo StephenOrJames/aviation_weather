@@ -2,6 +2,8 @@ import re
 
 import aviation_weather
 from aviation_weather import exceptions
+from aviation_weather.exceptions import FromGroupDecodeError, TemporaryGroupDecodeError, ProbabilityGroupDecodeError, \
+    BecomingGroupDecodeError
 
 
 class _ForecastGroup(object):
@@ -61,11 +63,35 @@ class _ForecastGroup(object):
             return ""
 
 
+# BECoMinG
+class BecomingGroup(_ForecastGroup):
+
+    def __init__(self, raw):
+        m = re.search(r"\bBECMG (?P<start_time>\d{4})/(?P<end_time>\d{4})\s(?P<remainder>.+)\b", raw)
+        if not m:
+            raise BecomingGroupDecodeError("BecomingGroup(%r) could not be parsed" % raw)
+        start_time = str(m.group("start_time"))
+        end_time = str(m.group("end_time"))
+        self.start_time = aviation_weather.Time(start_time + "00Z")
+        self.end_time = aviation_weather.Time(end_time + "00Z")
+        super().__init__(m.group("remainder"))
+
+    @property
+    def raw(self):
+        return "BECMG %(start_time)s/%(end_time)s %(super)s" % {
+            "start_time": self.start_time.raw[:-3],
+            "end_time": self.end_time.raw[:-3],
+            "super": super().raw
+        }
+
+
 # FroM
 class FromGroup(_ForecastGroup):
 
     def __init__(self, raw):
         m = re.search(r"\bFM(?P<time>\d{6})\s(?P<remainder>.+)\b", raw)
+        if not m:
+            raise FromGroupDecodeError("FromGroup(%r) could not be parsed" % raw)
         time = str(m.group("time"))
         self.time = aviation_weather.Time(time + "Z")
         super().__init__(m.group("remainder"))
@@ -78,31 +104,14 @@ class FromGroup(_ForecastGroup):
         }
 
 
-# TEMPOrary
-class TempoGroup(_ForecastGroup):
-
-    def __init__(self, raw):
-        m = re.search(r"\bTEMPO (?P<start_time>\d{4})/(?P<end_time>\d{4})\s(?P<remainder>.+)\b", raw)
-        start_time = str(m.group("start_time"))
-        end_time = str(m.group("end_time"))
-        self.start_time = aviation_weather.Time(start_time + "00Z")
-        self.end_time = aviation_weather.Time(end_time + "00Z")
-        super().__init__(m.group("remainder"))
-
-    @property
-    def raw(self):
-        return "TEMPO %(start_time)s/%(end_time)s %(super)s" % {
-            "start_time": self.start_time.raw[:-3],
-            "end_time": self.end_time.raw[:-3],
-            "super": super().raw
-        }
-
-
 # PROBability
-class ProbGroup(_ForecastGroup):
+class ProbabilityGroup(_ForecastGroup):
 
     def __init__(self, raw):
-        m = re.search(r"\bPROB(?P<probability>\d{2}) (?P<start_time>\d{4})/(?P<end_time>\d{4})\s(?P<remainder>.+)\b", raw)
+        m = re.search(
+            r"\bPROB(?P<probability>\d{2}) (?P<start_time>\d{4})/(?P<end_time>\d{4})\s(?P<remainder>.+)\b", raw)
+        if not m:
+            raise ProbabilityGroupDecodeError("ProbabilityGroup(%r) could not be parsed" % raw)
         self.probability = int(m.group("probability"))
         start_time = str(m.group("start_time"))
         end_time = str(m.group("end_time"))
@@ -120,11 +129,13 @@ class ProbGroup(_ForecastGroup):
         }
 
 
-# BECoMinG
-class BecmgGroup(_ForecastGroup):
+# TEMPOrary
+class TemporaryGroup(_ForecastGroup):
 
     def __init__(self, raw):
-        m = re.search(r"\bBECMG (?P<start_time>\d{4})/(?P<end_time>\d{4})\s(?P<remainder>.+)\b", raw)
+        m = re.search(r"\bTEMPO (?P<start_time>\d{4})/(?P<end_time>\d{4})\s(?P<remainder>.+)\b", raw)
+        if not m:
+            raise TemporaryGroupDecodeError("TemporaryGroup(%r) could not be parsed" % raw)
         start_time = str(m.group("start_time"))
         end_time = str(m.group("end_time"))
         self.start_time = aviation_weather.Time(start_time + "00Z")
@@ -133,7 +144,7 @@ class BecmgGroup(_ForecastGroup):
 
     @property
     def raw(self):
-        return "BECMG %(start_time)s/%(end_time)s %(super)s" % {
+        return "TEMPO %(start_time)s/%(end_time)s %(super)s" % {
             "start_time": self.start_time.raw[:-3],
             "end_time": self.end_time.raw[:-3],
             "super": super().raw

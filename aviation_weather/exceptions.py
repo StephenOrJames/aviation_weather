@@ -61,3 +61,28 @@ class WeatherGroupDecodeError(ComponentDecodeError):
 class WindDecodeError(ComponentDecodeError):
     """Wind could not be decoded"""
     pass
+
+
+class ForecastGroupDecodeError(ComponentDecodeError):
+    """Forecast group could not be decoded"""
+    pass
+
+
+class BecomingGroupDecodeError(ForecastGroupDecodeError):
+    """BECMG group could not be decoded"""
+    pass
+
+
+class FromGroupDecodeError(ForecastGroupDecodeError):
+    """FM group could not be decoded"""
+    pass
+
+
+class ProbabilityGroupDecodeError(ForecastGroupDecodeError):
+    """PROB group could not be decoded"""
+    pass
+
+
+class TemporaryGroupDecodeError(ForecastGroupDecodeError):
+    """TEMPO group could not be decoded"""
+    pass

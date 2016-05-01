@@ -17,12 +17,13 @@ class Visibility(Component):
             VisibilityDecodeError: If `raw` could not be parsed.
         """
         m = re.search(
-            r"\b(?:(?P<less>M)?(?P<distance1>\d[ \d/]{,4})(?P<unit>SM)|(?P=less)?(?P<distance2>\d{4}))\b",
+            r"\b(?:(?P<lt_gt>[MP])?(?P<distance1>\d[ \d/]{,4})(?P<unit>SM)|(?P=lt_gt)?(?P<distance2>\d{4}))\b",
             raw
         )
         if not m:
             raise VisibilityDecodeError("Visibility(%r) could not be parsed" % raw)
-        self.is_less_than = True if m.group("less") else False
+        self.less_than = m.group("lt_gt") == "M"
+        self.greater_than = m.group("lt_gt") == "P"
         distance = m.group("distance1") or m.group("distance2")
         self.unit = m.group("unit") or "m"
 
@@ -37,7 +38,12 @@ class Visibility(Component):
 
     @property
     def raw(self):
-        raw = "M" if self.is_less_than else ""
+        if self.less_than:
+            raw = "M"
+        elif self.greater_than:
+            raw = "P"
+        else:
+            raw = ""
 
         whole = self.distance // 1
         fraction = Fraction(self.distance % 1)

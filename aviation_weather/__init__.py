@@ -4,11 +4,11 @@ from aviation_weather.components.forecastgroup import BecmgGroup
 from aviation_weather.components.forecastgroup import FromGroup
 from aviation_weather.components.forecastgroup import ProbGroup
 from aviation_weather.components.forecastgroup import TempoGroup
+from aviation_weather.components.location import Location
 from aviation_weather.components.pressure import Pressure
 from aviation_weather.components.remarks import Remarks
 from aviation_weather.components.runwayvisualrange import RunwayVisualRange
 from aviation_weather.components.skycondition import SkyCondition
-from aviation_weather.components.station import Station
 from aviation_weather.components.temperature import Temperature
 from aviation_weather.components.time import Time
 from aviation_weather.components.visibility import Visibility

@@ -2,7 +2,6 @@ from urllib.error import HTTPError
 from urllib.request import urlopen
 import aviation_weather
 import aviation_weather.exceptions as exceptions
-from aviation_weather.exceptions import ReportDecodeError
 
 
 class Report(object):
@@ -10,7 +9,7 @@ class Report(object):
 
     Attributes:
         type (_Container): The specified type of the Report.
-        station (Station): The station from which the report was produced.
+        location (Location): The location for which the report was produced.
         time (Time): The time date at which the report was produced.
         wind (Wind): The reported winds.
         visibility (Visibility): The reported visibility.
@@ -45,7 +44,7 @@ class Report(object):
             raw += "%s " % self.type.raw
         if self.modifier:
             raw += "%s " % self.modifier
-        raw += "%s " % self.station.raw
+        raw += "%s " % self.location.raw
         raw += "%s " % self.time.raw
         raw += "%s " % self.wind.raw
         raw += "%s " % self.visibility.raw
@@ -66,7 +65,7 @@ class Report(object):
             raw += "%s " % self.remarks.raw
         if self._end:
             raw += "%s " % self._end.raw
-        return raw.strip()
+        return raw.rstrip()
 
     def _parse_body(self, text):
         parts = text.split()
@@ -88,7 +87,7 @@ class Report(object):
         if self.modifier:
             parts.remove(self.modifier)
 
-        self.station = aviation_weather.Station(parts[0])
+        self.location = aviation_weather.Location(parts[0])
         self.time = aviation_weather.Time(parts[1])
 
         try:

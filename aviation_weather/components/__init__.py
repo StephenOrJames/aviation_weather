@@ -1,10 +1,10 @@
 __all__ = [
     "forecastgroup"
+    "location",
     "pressure",
     "remarks",
     "runwayvisualrange",
     "skycondition",
-    "station",
     "temperature",
     "time",
     "visibility",

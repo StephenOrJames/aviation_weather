@@ -35,7 +35,7 @@ class Time(Component):
         # Validations
         if self.day > 31:
             raise TimeDecodeError("Time(%s) contains an invalid day" % raw)
-        if self.hour > 23:
+        if self.hour > 24:
             raise TimeDecodeError("Time(%s) contains an invalid hour" % raw)
         if self.minute > 59:
             raise TimeDecodeError("Time(%s) contains an invalid minute" % raw)

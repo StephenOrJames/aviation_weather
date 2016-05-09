@@ -3,8 +3,6 @@ import re
 import aviation_weather
 from aviation_weather import exceptions
 from aviation_weather.components import Component
-from aviation_weather.exceptions import FromGroupDecodeError, TemporaryGroupDecodeError, ProbabilityGroupDecodeError, \
-    BecomingGroupDecodeError
 
 
 class _ChangeGroup(Component):
@@ -70,7 +68,7 @@ class BecomingGroup(_ChangeGroup):
     def __init__(self, raw):
         m = re.search(r"\bBECMG (?P<start_time>\d{4})/(?P<end_time>\d{4})\s(?P<remainder>.+)\b", raw)
         if not m:
-            raise BecomingGroupDecodeError("BecomingGroup(%r) could not be parsed" % raw)
+            raise exceptions.BecomingGroupDecodeError("BecomingGroup(%r) could not be parsed" % raw)
         start_time = str(m.group("start_time"))
         end_time = str(m.group("end_time"))
         self.start_time = aviation_weather.Time(start_time + "00Z")
@@ -92,7 +90,7 @@ class FromGroup(_ChangeGroup):
     def __init__(self, raw):
         m = re.search(r"\bFM(?P<time>\d{6})\s(?P<remainder>.+)\b", raw)
         if not m:
-            raise FromGroupDecodeError("FromGroup(%r) could not be parsed" % raw)
+            raise exceptions.FromGroupDecodeError("FromGroup(%r) could not be parsed" % raw)
         time = str(m.group("time"))
         self.time = aviation_weather.Time(time + "Z")
         super().__init__(m.group("remainder"))
@@ -112,7 +110,7 @@ class ProbabilityGroup(_ChangeGroup):
         m = re.search(
             r"\bPROB(?P<probability>\d{2}) (?P<start_time>\d{4})/(?P<end_time>\d{4})\s(?P<remainder>.+)\b", raw)
         if not m:
-            raise ProbabilityGroupDecodeError("ProbabilityGroup(%r) could not be parsed" % raw)
+            raise exceptions.ProbabilityGroupDecodeError("ProbabilityGroup(%r) could not be parsed" % raw)
         self.probability = int(m.group("probability"))
         start_time = str(m.group("start_time"))
         end_time = str(m.group("end_time"))
@@ -136,7 +134,7 @@ class TemporaryGroup(_ChangeGroup):
     def __init__(self, raw):
         m = re.search(r"\bTEMPO (?P<start_time>\d{4})/(?P<end_time>\d{4})\s(?P<remainder>.+)\b", raw)
         if not m:
-            raise TemporaryGroupDecodeError("TemporaryGroup(%r) could not be parsed" % raw)
+            raise exceptions.TemporaryGroupDecodeError("TemporaryGroup(%r) could not be parsed" % raw)
         start_time = str(m.group("start_time"))
         end_time = str(m.group("end_time"))
         self.start_time = aviation_weather.Time(start_time + "00Z")

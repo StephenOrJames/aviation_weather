@@ -2,11 +2,12 @@ import re
 
 import aviation_weather
 from aviation_weather import exceptions
+from aviation_weather.components import Component
 from aviation_weather.exceptions import FromGroupDecodeError, TemporaryGroupDecodeError, ProbabilityGroupDecodeError, \
     BecomingGroupDecodeError
 
 
-class _ForecastGroup(object):
+class _ForecastGroup(Component):
 
     def __init__(self, raw):
         try:

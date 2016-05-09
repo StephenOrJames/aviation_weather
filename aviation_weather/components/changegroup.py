@@ -108,24 +108,34 @@ class ProbabilityGroup(_ChangeGroup):
 
     def __init__(self, raw):
         m = re.search(
-            r"\bPROB(?P<probability>\d{2}) (?P<start_time>\d{4})/(?P<end_time>\d{4})\s(?P<remainder>.+)\b", raw)
+            r"\bPROB(?P<probability>\d{2})(?P<data> (?P<start_time>\d{4})/(?P<end_time>\d{4})\s(?P<remainder>.+))?\b", raw)
         if not m:
             raise exceptions.ProbabilityGroupDecodeError("ProbabilityGroup(%r) could not be parsed" % raw)
         self.probability = int(m.group("probability"))
-        start_time = str(m.group("start_time"))
-        end_time = str(m.group("end_time"))
-        self.start_time = aviation_weather.Time(start_time + "00Z")
-        self.end_time = aviation_weather.Time(end_time + "00Z")
-        super().__init__(m.group("remainder"))
+        if m.group("data"):
+            start_time = str(m.group("start_time"))
+            end_time = str(m.group("end_time"))
+            self.start_time = aviation_weather.Time(start_time + "00Z")
+            self.end_time = aviation_weather.Time(end_time + "00Z")
+            remainder = m.group("remainder")
+        else:
+            self.start_time = None
+            self.end_time = None
+            remainder = ""
+        super().__init__(remainder)
 
     @property
     def raw(self):
-        return "PROB%(probability)d %(start_time)s/%(end_time)s %(super)s" % {
-            "probability": self.probability,
-            "start_time": self.start_time.raw[:-3],
-            "end_time": self.end_time.raw[:-3],
-            "super": super().raw
-        }
+        probability = "PROB%d" % self.probability
+        if self.start_time and self.end_time:
+            return "%(probability)s %(start_time)s/%(end_time)s %(super)s" % {
+                "probability": probability,
+                "start_time": self.start_time.raw[:-3],
+                "end_time": self.end_time.raw[:-3],
+                "super": super().raw
+            }
+        else:
+            return probability
 
 
 # TEMPOrary

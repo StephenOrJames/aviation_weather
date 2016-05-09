@@ -123,6 +123,18 @@ class TestChangeGroup(unittest.TestCase):
             sky_conditions=(aviation_weather.SkyCondition("OVC006"),)
         )
 
+    def test_probability_group_3(self):
+        self._test_probability_group(
+            raw="PROB30",
+            probability=30,
+            start_time=None,
+            end_time=None,
+            wind=None,
+            visibility=None,
+            weather_groups=(),
+            sky_conditions=()
+        )
+
     def test_temporary_group_1(self):
         self._test_temporary_group(
             raw="TEMPO 0920/0922 1/2SM +TSRA OVC008CB",

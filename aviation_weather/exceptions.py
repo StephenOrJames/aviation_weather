@@ -38,6 +38,11 @@ class LocationDecodeError(ComponentDecodeError):
     pass
 
 
+class MessageTypeDecodeError(ComponentDecodeError):
+    """Message type could not be decoded"""
+    pass
+
+
 class TemperatureDecodeError(ComponentDecodeError):
     """Temperature and dew point could not be decoded"""
     pass

@@ -6,6 +6,7 @@ from aviation_weather.components.changegroup import FromGroup
 from aviation_weather.components.changegroup import ProbabilityGroup
 from aviation_weather.components.changegroup import TemporaryGroup
 from aviation_weather.components.location import Location
+from aviation_weather.components.messagetype import MessageType
 from aviation_weather.components.pressure import Pressure
 from aviation_weather.components.remarks import Remarks
 from aviation_weather.components.runwayvisualrange import RunwayVisualRange

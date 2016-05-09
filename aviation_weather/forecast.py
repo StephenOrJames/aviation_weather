@@ -57,7 +57,10 @@ class Forecast(object):
             r = r[i:]
         self.sky_conditions = tuple(t)
 
-        self.wind_shear = aviation_weather.WindShear(r[0])
+        if r:
+            self.wind_shear = aviation_weather.WindShear(r[0])
+        else:
+            self.wind_shear = None
 
         # Changes
         self.changes = list()
@@ -93,7 +96,8 @@ class Forecast(object):
             raw += " %s" % weather_group.raw
         for sky_condition in self.sky_conditions:
             raw += " %s" % sky_condition.raw
-        raw += " %s" % self.wind_shear.raw
+        if self.wind_shear:
+            raw += " %s" % self.wind_shear.raw
         for change in self.changes:
             raw += " %s" % change.raw
         return raw

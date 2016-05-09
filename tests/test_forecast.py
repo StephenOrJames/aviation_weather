@@ -20,7 +20,7 @@ class TestForecast(unittest.TestCase):
         self.assertEqual(wind_shear, forecast.wind_shear)
         self.assertEqual(changes, forecast.changes)
 
-    def test_parse(self):
+    def test_parse_1(self):
         self._test_parse(
             raw=("TAF KPIT 091730Z 0918/1024 15005KT 5SM HZ FEW020 WS010/31022KT"
                  " FM091930 30015G25KT 3SM SHRA OVC015"
@@ -45,5 +45,37 @@ class TestForecast(unittest.TestCase):
                 aviation_weather.ProbabilityGroup("PROB30 1004/1007 1SM -RA BR"),
                 aviation_weather.FromGroup("FM101015 18005KT 6SM -SHRA OVC020"),
                 aviation_weather.BecomingGroup("BECMG 1013/1015 P6SM NSW SKC")
+            ]
+        )
+
+    def test_parse_2(self):
+        self._test_parse(
+            raw=("TAF EGKK 082259Z 0900/1006 08008KT CAVOK"
+                 " BECMG 0909/0912 BKN040"
+                 " TEMPO 0912/0921 6000 SHRA"
+                 " PROB30"
+                 " TEMPO 0913/0920 4000 +SHRA BKN012 BKN025CB"
+                 " PROB30 0921/1004 5000 HZ"
+                 " BECMG 1004/1006 6000 -RADZ BKN010"
+                 " PROB40"
+                 " TEMPO 1005/1006 4000 RADZ BKN006"),
+            type_="TAF",
+            location=aviation_weather.Location("EGKK"),
+            time=aviation_weather.Time("082259Z"),
+            valid_period=(aviation_weather.Time("090000Z"), aviation_weather.Time("100600Z")),
+            wind=aviation_weather.Wind("08008KT"),
+            visibility=aviation_weather.Visibility("CAVOK"),
+            weather_groups=(),
+            sky_conditions=(),
+            wind_shear=None,
+            changes=[
+                aviation_weather.BecomingGroup("BECMG 0909/0912 BKN040"),
+                aviation_weather.TemporaryGroup("TEMPO 0912/0921 6000 SHRA"),
+                aviation_weather.ProbabilityGroup("PROB30"),
+                aviation_weather.TemporaryGroup("TEMPO 0913/0920 4000 +SHRA BKN012 BKN025CB"),
+                aviation_weather.ProbabilityGroup("PROB30 0921/1004 5000 HZ"),
+                aviation_weather.BecomingGroup("BECMG 1004/1006 6000 -RADZ BKN010"),
+                aviation_weather.ProbabilityGroup("PROB40"),
+                aviation_weather.TemporaryGroup("TEMPO 1005/1006 4000 RADZ BKN006")
             ]
         )

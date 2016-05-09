@@ -44,6 +44,14 @@ class _ChangeGroup(Component):
             r = r[i:]
         self.sky_conditions = tuple(t)
 
+        # Remarks (Canadian TAFs seem to always end with remarks)
+        self._remarks = None
+        if r:
+            try:
+                self._remarks = aviation_weather.Remarks(" ".join(r))
+            except exceptions.RemarksDecodeError:
+                pass
+
     @property
     def raw(self):
         raw = ""
@@ -55,6 +63,8 @@ class _ChangeGroup(Component):
             raw += " %s" % weather_group.raw
         for sky_condition in self.sky_conditions:
             raw += " %s" % sky_condition.raw
+        if self._remarks:
+            raw += " %s" % self._remarks.raw
 
         if raw:
             return raw[1:]  # strip leading space

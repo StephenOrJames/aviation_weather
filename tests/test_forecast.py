@@ -29,7 +29,7 @@ class TestForecast(unittest.TestCase):
                  " PROB30 1004/1007 1SM -RA BR"
                  " FM101015 18005KT 6SM -SHRA OVC020"
                  " BECMG 1013/1015 P6SM NSW SKC"),
-            type_="TAF",
+            type_=aviation_weather.MessageType("TAF"),
             location=aviation_weather.Location("KPIT"),
             time=aviation_weather.Time("091730Z"),
             valid_period=(aviation_weather.Time("091800Z"), aviation_weather.Time("102400Z")),
@@ -59,7 +59,7 @@ class TestForecast(unittest.TestCase):
                  " BECMG 1004/1006 6000 -RADZ BKN010"
                  " PROB40"
                  " TEMPO 1005/1006 4000 RADZ BKN006"),
-            type_="TAF",
+            type_=aviation_weather.MessageType("TAF"),
             location=aviation_weather.Location("EGKK"),
             time=aviation_weather.Time("082259Z"),
             valid_period=(aviation_weather.Time("090000Z"), aviation_weather.Time("100600Z")),
@@ -77,5 +77,23 @@ class TestForecast(unittest.TestCase):
                 aviation_weather.BecomingGroup("BECMG 1004/1006 6000 -RADZ BKN010"),
                 aviation_weather.ProbabilityGroup("PROB40"),
                 aviation_weather.TemporaryGroup("TEMPO 1005/1006 4000 RADZ BKN006")
+            ]
+        )
+
+    def test_parse_3(self):
+        self._test_parse(
+            raw=("KMIA 090259Z 0903/0924 VRB05KT P6SM SKC"
+                 " FM091400 12013KT P6SM SCT050"),
+            type_=None,
+            location=aviation_weather.Location("KMIA"),
+            time=aviation_weather.Time("090259Z"),
+            valid_period=(aviation_weather.Time("090300Z"), aviation_weather.Time("092400Z")),
+            wind=aviation_weather.Wind("VRB05KT"),
+            visibility=aviation_weather.Visibility("P6SM"),
+            weather_groups=(),
+            sky_conditions=(aviation_weather.SkyCondition("SKC"),),
+            wind_shear=None,
+            changes=[
+                aviation_weather.FromGroup("FM091400 12013KT P6SM SCT050")
             ]
         )

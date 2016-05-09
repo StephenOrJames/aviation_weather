@@ -7,7 +7,7 @@ class Forecast(object):
     """The Forecast class represents a weather forecast.
 
     Attributes:
-        type (str): The type of forecast (e.g. 'TAF' or 'TAF AMD').
+        type (MessageType): The type of forecast (e.g. 'TAF' or 'TAF AMD').
         location (Location): The location associated with the forecast.
         time (Time): The issuance time of the forecast.
         valid_period (str): The time period for which the forecast is valid.
@@ -23,12 +23,15 @@ class Forecast(object):
         parts = re.split(r"\s(?=(?:BECMG|FM\d{6}|PROB\d{2}|TEMPO)\s)", raw)  # separate the major parts
 
         part = parts[0]
-        t = re.match(r"TAF(?: AMD)?\s+", raw).group()  # TODO: don't leave this as a string
+        t = re.match(r"TAF(?: AMD)?\s+", raw)
         if t is None:
-            raise exceptions.WeatherDecodeError("Forecasts must begin with a valid type.")  # TODO: create exception for Forecast
-        r = part.lstrip(t).split()
+            self.type = None
+            r = part.split()
+        else:
+            tg = t.group()
+            self.type = aviation_weather.MessageType(tg.rstrip())
+            r = part.lstrip(tg).split()
 
-        self.type = t.rstrip()
         self.location = aviation_weather.Location(r[0])
         self.time = aviation_weather.Time(r[1])
         self.valid_period = tuple(aviation_weather.Time("%s00Z" % period) for period in r[2].split("/"))
@@ -86,7 +89,9 @@ class Forecast(object):
 
     @property
     def raw(self):
-        raw = self.type
+        raw = ""
+        if self.type:
+            raw += " %s" % self.type.raw
         raw += " %s" % self.location.raw
         raw += " %s" % self.time.raw
         raw += " %s/%s" % (self.valid_period[0].raw[:-3], self.valid_period[1].raw[:-3])
@@ -100,4 +105,5 @@ class Forecast(object):
             raw += " %s" % self.wind_shear.raw
         for change in self.changes:
             raw += " %s" % change.raw
-        return raw
+
+        return raw[1:]

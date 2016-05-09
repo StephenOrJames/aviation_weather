@@ -8,7 +8,7 @@ class Report(object):
     """The Report class represents a weather report.
 
     Attributes:
-        type (_Container): The specified type of the Report.
+        type (MessageType): The specified type of the Report.
         location (Location): The location for which the report was produced.
         time (Time): The time date at which the report was produced.
         wind (Wind): The reported winds.
@@ -73,7 +73,7 @@ class Report(object):
             raise exceptions.ReportDecodeError
 
         if parts[0] in ("METAR", "SPECI"):
-            self.type = _Container(parts[0])
+            self.type = aviation_weather.MessageType(parts[0])
             parts = parts[1:]
         else:
             self.type = None

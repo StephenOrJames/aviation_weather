@@ -3,9 +3,9 @@ import unittest
 import aviation_weather
 
 
-class TestForecastGroup(unittest.TestCase):
+class TestChangeGroup(unittest.TestCase):
 
-    def _test_forecast_group(self, raw, group, wind, visibility, weather_groups, sky_conditions):
+    def _test_change_group(self, raw, group, wind, visibility, weather_groups, sky_conditions):
         self.assertEqual(wind, group.wind)
         self.assertEqual(visibility, group.visibility)
         self.assertEqual(weather_groups, group.weather_groups)
@@ -16,25 +16,25 @@ class TestForecastGroup(unittest.TestCase):
         group = aviation_weather.BecomingGroup(raw)
         self.assertEqual(start_time, group.start_time)
         self.assertEqual(end_time, group.end_time)
-        self._test_forecast_group(raw, group, **kwargs)
+        self._test_change_group(raw, group, **kwargs)
 
     def _test_from_group(self, time, raw, **kwargs):
         group = aviation_weather.FromGroup(raw)
         self.assertEqual(time, group.time)
-        self._test_forecast_group(raw, group, **kwargs)
+        self._test_change_group(raw, group, **kwargs)
 
     def _test_probability_group(self, raw, probability, start_time, end_time, **kwargs):
         group = aviation_weather.ProbabilityGroup(raw)
         self.assertEqual(probability, group.probability)
         self.assertEqual(start_time, group.start_time)
         self.assertEqual(end_time, group.end_time)
-        self._test_forecast_group(raw, group, **kwargs)
+        self._test_change_group(raw, group, **kwargs)
 
     def _test_temporary_group(self, raw, start_time, end_time, **kwargs):
         group = aviation_weather.TemporaryGroup(raw)
         self.assertEqual(start_time, group.start_time)
         self.assertEqual(end_time, group.end_time)
-        self._test_forecast_group(raw, group, **kwargs)
+        self._test_change_group(raw, group, **kwargs)
 
     def test_becoming_group_1(self):
         self._test_becoming_group(

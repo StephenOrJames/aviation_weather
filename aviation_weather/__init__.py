@@ -1,4 +1,5 @@
 from aviation_weather import exceptions
+from aviation_weather.forecast import Forecast
 from aviation_weather.report import Report
 from aviation_weather.components.forecastgroup import BecomingGroup
 from aviation_weather.components.forecastgroup import FromGroup
@@ -14,3 +15,4 @@ from aviation_weather.components.time import Time
 from aviation_weather.components.visibility import Visibility
 from aviation_weather.components.weathergroup import WeatherGroup
 from aviation_weather.components.wind import Wind
+from aviation_weather.components.windshear import WindShear

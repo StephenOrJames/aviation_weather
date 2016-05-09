@@ -63,6 +63,11 @@ class WindDecodeError(ComponentDecodeError):
     pass
 
 
+class WindShearDecodeError(ComponentDecodeError):
+    """Wind shear could not be decoded"""
+    pass
+
+
 class ForecastGroupDecodeError(ComponentDecodeError):
     """Forecast group could not be decoded"""
     pass

@@ -75,6 +75,12 @@ class Forecast(object):
             if p:
                 self.changes.append(p)
 
+    def __repr__(self):
+        return "%s(%r)" % (self.__class__.__name__, self.raw)
+
+    def __str__(self):
+        return self.raw  # TODO: change to self.decoded (if and when it is implemented)
+
     @property
     def raw(self):
         raw = self.type

@@ -7,7 +7,7 @@ from aviation_weather.exceptions import FromGroupDecodeError, TemporaryGroupDeco
     BecomingGroupDecodeError
 
 
-class _ForecastGroup(Component):
+class _ChangeGroup(Component):
 
     def __init__(self, raw):
         try:
@@ -65,7 +65,7 @@ class _ForecastGroup(Component):
 
 
 # BECoMinG
-class BecomingGroup(_ForecastGroup):
+class BecomingGroup(_ChangeGroup):
 
     def __init__(self, raw):
         m = re.search(r"\bBECMG (?P<start_time>\d{4})/(?P<end_time>\d{4})\s(?P<remainder>.+)\b", raw)
@@ -87,7 +87,7 @@ class BecomingGroup(_ForecastGroup):
 
 
 # FroM
-class FromGroup(_ForecastGroup):
+class FromGroup(_ChangeGroup):
 
     def __init__(self, raw):
         m = re.search(r"\bFM(?P<time>\d{6})\s(?P<remainder>.+)\b", raw)
@@ -106,7 +106,7 @@ class FromGroup(_ForecastGroup):
 
 
 # PROBability
-class ProbabilityGroup(_ForecastGroup):
+class ProbabilityGroup(_ChangeGroup):
 
     def __init__(self, raw):
         m = re.search(
@@ -131,7 +131,7 @@ class ProbabilityGroup(_ForecastGroup):
 
 
 # TEMPOrary
-class TemporaryGroup(_ForecastGroup):
+class TemporaryGroup(_ChangeGroup):
 
     def __init__(self, raw):
         m = re.search(r"\bTEMPO (?P<start_time>\d{4})/(?P<end_time>\d{4})\s(?P<remainder>.+)\b", raw)

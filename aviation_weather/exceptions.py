@@ -68,26 +68,26 @@ class WindShearDecodeError(ComponentDecodeError):
     pass
 
 
-class ForecastGroupDecodeError(ComponentDecodeError):
-    """Forecast group could not be decoded"""
+class ChangeGroupDecodeError(ComponentDecodeError):
+    """Change group could not be decoded"""
     pass
 
 
-class BecomingGroupDecodeError(ForecastGroupDecodeError):
+class BecomingGroupDecodeError(ChangeGroupDecodeError):
     """BECMG group could not be decoded"""
     pass
 
 
-class FromGroupDecodeError(ForecastGroupDecodeError):
+class FromGroupDecodeError(ChangeGroupDecodeError):
     """FM group could not be decoded"""
     pass
 
 
-class ProbabilityGroupDecodeError(ForecastGroupDecodeError):
+class ProbabilityGroupDecodeError(ChangeGroupDecodeError):
     """PROB group could not be decoded"""
     pass
 
 
-class TemporaryGroupDecodeError(ForecastGroupDecodeError):
+class TemporaryGroupDecodeError(ChangeGroupDecodeError):
     """TEMPO group could not be decoded"""
     pass

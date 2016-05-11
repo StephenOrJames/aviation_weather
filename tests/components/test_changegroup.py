@@ -1,6 +1,7 @@
 import unittest
 
 import aviation_weather
+from aviation_weather import exceptions
 
 
 class TestChangeGroup(unittest.TestCase):
@@ -200,3 +201,19 @@ class TestChangeGroup(unittest.TestCase):
             weather_groups=(aviation_weather.WeatherGroup("SHRA"),),
             sky_conditions=(aviation_weather.SkyCondition("BKN014"),)
         )
+
+    def test_invalid_becoming_group(self):
+        with self.assertRaises(exceptions.BecomingGroupDecodeError):
+            aviation_weather.BecomingGroup("BECMG40 0205/0208 BKN020")
+
+    def test_invalid_from_group(self):
+        with self.assertRaises(exceptions.FromGroupDecodeError):
+            aviation_weather.FromGroup("FM 091930 30015G25KT 3SM SHRA OVC015")
+
+    def test_invalid_probability_group(self):
+        with self.assertRaises(exceptions.ProbabilityGroupDecodeError):
+            aviation_weather.ProbabilityGroup("PROB 0121/0206 2SM BR OVC006")
+
+    def test_invalid_temporary_group(self):
+        with self.assertRaises(exceptions.TemporaryGroupDecodeError):
+            aviation_weather.TemporaryGroup("TEMPO30 0100/0102 2SM BR SCT010")

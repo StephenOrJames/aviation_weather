@@ -56,7 +56,3 @@ class TestWind(unittest.TestCase):
 
     def test_invalid_no_unit(self):
         self._test_invalid("21012G21")
-
-
-if __name__ == "__main__":
-    unittest.main()

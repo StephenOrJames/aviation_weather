@@ -33,7 +33,3 @@ class TestTemperature(unittest.TestCase):
 
     def test_invalid_slashes(self):
         self._test_invalid("////")
-
-
-if __name__ == "__main__":
-    unittest.main()

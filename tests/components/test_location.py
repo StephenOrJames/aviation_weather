@@ -32,7 +32,3 @@ class TestLocation(unittest.TestCase):
 
     def test_invalid_long(self):
         self._test_invalid("Worse")
-
-
-if __name__ == "__main__":
-    unittest.main()

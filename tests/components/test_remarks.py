@@ -15,7 +15,3 @@ class TestRemarks(unittest.TestCase):
     def test_invalid(self):
         with self.assertRaises(RemarksDecodeError):
             Remarks("AO2 PK WND 14027/1802 SLP183 P0018 T01170106")
-
-
-if __name__ == "__main__":
-    unittest.main()

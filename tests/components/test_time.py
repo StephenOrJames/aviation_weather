@@ -42,7 +42,3 @@ class TestTime(unittest.TestCase):
 
     def test_invalid_minute(self):
         self._test_invalid("122384Z")
-
-
-if __name__ == "__main__":
-    unittest.main()

@@ -21,7 +21,3 @@ class TestPressure(unittest.TestCase):
     def test_invalid(self):
         with self.assertRaises(PressureDecodeError):
             Pressure("3000")  # no unit indicator; more likely visibility
-
-
-if __name__ == "__main__":
-    unittest.main()

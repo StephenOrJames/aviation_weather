@@ -181,7 +181,3 @@ class TestReport(unittest.TestCase):
 
     def test_retrieve_EGLL(self):
         self._test_retrieve("EGLL")
-
-
-if __name__ == "__main__":
-    unittest.main()

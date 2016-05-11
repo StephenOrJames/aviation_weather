@@ -46,7 +46,3 @@ class TestWeatherGroup(unittest.TestCase):
 
     def test_invalid_description_phenomenon_2(self):
         self._test_invalid("VCBIRD")
-
-
-if __name__ == "__main__":
-    unittest.main()

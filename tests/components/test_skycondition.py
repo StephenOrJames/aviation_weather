@@ -62,7 +62,3 @@ class TestSkyCondition(unittest.TestCase):
 
     def test_invalid_suffix(self):
         self._test_invalid("SCT015CU")
-
-
-if __name__ == "__main__":
-    unittest.main()

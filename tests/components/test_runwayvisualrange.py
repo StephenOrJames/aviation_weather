@@ -50,7 +50,3 @@ class TestRunwayVisualRange(unittest.TestCase):
 
     def test_invalid_trend(self):
         self._test_invalid("R12L/2000V4000FTB")
-
-
-if __name__ == "__main__":
-    unittest.main()

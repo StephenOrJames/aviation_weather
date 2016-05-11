@@ -66,7 +66,3 @@ class TestVisibility(unittest.TestCase):
 
     def test_invalid_long_SM(self):
         self._test_invalid("123456SM")
-
-
-if __name__ == "__main__":
-    unittest.main()

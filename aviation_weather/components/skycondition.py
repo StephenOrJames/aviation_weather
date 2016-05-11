@@ -27,7 +27,7 @@ class SkyCondition(Component):
             SkyConditionDecodeError: If `raw` could not be parsed.
         """
         m = re.search(
-            r"\b(?P<type>(?:%(types)s))(?P<height>\d{3})?(?P<cb>CB)?\b" % {"types": "|".join(SkyCondition.TYPES)},
+            r"\b(?P<type>(?:%(types)s))(?P<height>\d{3})?(?P<cb_tcu>CB|TCU)?\b" % {"types": "|".join(SkyCondition.TYPES)},
             raw
         )
         if not m:
@@ -36,7 +36,8 @@ class SkyCondition(Component):
         self.height = m.group("height")
         if self.height:
             self.height = int(m.group("height")) * 100
-        self.cumulonimbus = True if m.group("cb") else False
+        self.cumulonimbus = m.group("cb_tcu") == "CB"
+        self.towering_cumulus = m.group("cb_tcu") == "TCU"
 
     @property
     def raw(self):
@@ -45,4 +46,6 @@ class SkyCondition(Component):
             raw += "%03d" % (self.height // 100)
         if self.cumulonimbus:
             raw += "CB"
+        if self.towering_cumulus:
+            raw += "TCU"
         return raw

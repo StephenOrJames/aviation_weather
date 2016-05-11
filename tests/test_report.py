@@ -158,6 +158,21 @@ class TestReport(unittest.TestCase):
             remarks=None
         )
 
+    def test_parse_MUHA(self):
+        self._test_parse(
+            raw="MUHA 102255Z 04010KT 9000 FEW018TCU BKN025 25/22 Q1017",
+            location=Location("MUHA"),
+            time=Time("102255Z"),
+            wind=Wind("04010KT"),
+            visibility=Visibility("9000"),
+            runway_visual_range=None,
+            weather_groups=None,
+            sky_conditions=(SkyCondition("FEW018TCU"), SkyCondition("BKN025")),
+            temperature=Temperature("25/22"),
+            pressure=Pressure("Q1017"),
+            remarks=None
+        )
+
     def _test_retrieve(self, code):
         self.assertIsInstance(Report.retrieve(code), Report)
 

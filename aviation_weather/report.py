@@ -28,7 +28,10 @@ class Report(object):
             remarks = aviation_weather.Remarks("RMK " + remarks)  # re-add RMK so it gets parsed properly
         else:
             body, remarks = raw, None
-        self._parse_body(body)
+        try:
+            self._parse_body(body)
+        except (exceptions.ComponentDecodeError, IndexError) as e:
+            raise exceptions.ReportDecodeError("Report(%r) could not be parsed" % raw) from e
         self.remarks = remarks
 
     def __repr__(self):

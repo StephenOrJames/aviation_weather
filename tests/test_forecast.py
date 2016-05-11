@@ -135,3 +135,14 @@ class TestForecast(unittest.TestCase):
 
     def test_invalid_bad(self):
         self._test_invalid("a PROB30 FM010101 2")
+
+    def test_invalid_rmks(self):
+        self._test_invalid(
+            "TAF CYVR 090538Z 0906/1012 10010KT P6SM FEW040 FEW070"
+            " TEMPO 0906/0909 FEW020 SCT040 BKN070"
+            " PROB30 0906/0907 VRB15G25KT 6SM TSRA SCT015 BKN040CB"
+            " FM090900 10008KT P6SM FEW080"
+            " BECMG 0910/0912 33007KT"
+            " BECMG 0918/0920 28015KT"
+            " FM100800 VRB03KT P6SM SKC FAIL NXT FCST BY 090900Z"
+        )

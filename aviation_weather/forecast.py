@@ -24,7 +24,7 @@ class Forecast(object):
         try:
             self._parse(raw, parts)
         except (exceptions.ComponentDecodeError, IndexError) as e:
-            raise exceptions.ForecastDecodeError("Forecast(%r) could not be parsed") from e
+            raise exceptions.ForecastDecodeError("Forecast(%r) could not be parsed" % raw) from e
 
     def _parse(self, raw, parts):
         part = parts[0]

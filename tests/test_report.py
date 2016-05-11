@@ -10,6 +10,7 @@ from aviation_weather.components.time import Time
 from aviation_weather.components.visibility import Visibility
 from aviation_weather.components.weathergroup import WeatherGroup
 from aviation_weather.components.wind import Wind
+from aviation_weather.exceptions import ReportDecodeError
 from aviation_weather.report import Report
 
 
@@ -181,3 +182,13 @@ class TestReport(unittest.TestCase):
 
     def test_retrieve_EGLL(self):
         self._test_retrieve("EGLL")
+
+    def _test_invalid(self, raw):
+        with self.assertRaises(ReportDecodeError):
+            Report(raw)
+
+    def test_invalid_blank(self):
+        self._test_invalid("")
+
+    def test_invalid_bad(self):
+        self._test_invalid("LFPG")

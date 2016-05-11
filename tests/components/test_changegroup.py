@@ -202,18 +202,59 @@ class TestChangeGroup(unittest.TestCase):
             sky_conditions=(aviation_weather.SkyCondition("BKN014"),)
         )
 
+    def _test_invalid_change_group(self, exception_type, component_type, raw):
+        with self.assertRaises(exception_type):
+            component_type(raw)
+
+    def _test_invalid_becoming_group(self, raw):
+        self._test_invalid_change_group(
+            exceptions.BecomingGroupDecodeError,
+            aviation_weather.BecomingGroup,
+            raw
+        )
+
+    def _test_invalid_from_group(self, raw):
+        self._test_invalid_change_group(
+            exceptions.FromGroupDecodeError,
+            aviation_weather.FromGroup,
+            raw
+        )
+
+    def _test_invalid_probability_group(self, raw):
+        self._test_invalid_change_group(
+            exceptions.ProbabilityGroupDecodeError,
+            aviation_weather.ProbabilityGroup,
+            raw
+        )
+
+    def _test_invalid_temporary_group(self, raw):
+        self._test_invalid_change_group(
+            exceptions.TemporaryGroupDecodeError,
+            aviation_weather.TemporaryGroup,
+            raw
+        )
+
     def test_invalid_becoming_group(self):
-        with self.assertRaises(exceptions.BecomingGroupDecodeError):
-            aviation_weather.BecomingGroup("BECMG40 0205/0208 BKN020")
+        self._test_invalid_becoming_group("BECMG40 0205/0208 BKN020")
+
+    def test_invalid_becoming_group_remarks(self):
+        self._test_invalid_becoming_group("BECMG 0205/0208 BKN020 FAIL NXT FCST BY 090900Z")
 
     def test_invalid_from_group(self):
-        with self.assertRaises(exceptions.FromGroupDecodeError):
-            aviation_weather.FromGroup("FM 091930 30015G25KT 3SM SHRA OVC015")
+        self._test_invalid_from_group("FM 091930 30015G25KT 3SM SHRA OVC015")
+
+    def test_invalid_from_group_remarks(self):
+        self._test_invalid_from_group("FM100800 VRB03KT P6SM SKC FAIL NXT FCST BY 090900Z")
 
     def test_invalid_probability_group(self):
-        with self.assertRaises(exceptions.ProbabilityGroupDecodeError):
-            aviation_weather.ProbabilityGroup("PROB 0121/0206 2SM BR OVC006")
+        self._test_invalid_probability_group("PROB 0121/0206 2SM BR OVC006")
+
+    def test_invalid_probability_group_remarks(self):
+        self._test_invalid_probability_group("PROB30 0121/0206 2SM BR OVC006 FAIL NXT FCST BY 090900Z")
 
     def test_invalid_temporary_group(self):
-        with self.assertRaises(exceptions.TemporaryGroupDecodeError):
-            aviation_weather.TemporaryGroup("TEMPO30 0100/0102 2SM BR SCT010")
+        self._test_invalid_temporary_group("TEMPO30 0100/0102 2SM BR SCT010")
+
+    def test_invalid_temporary_group_remarks(self):
+        self._test_invalid_temporary_group("TEMPO 0100/0102 2SM BR SCT010 FAIL NXT FCST BY 090900Z")
+    

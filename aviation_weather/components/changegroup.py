@@ -49,8 +49,8 @@ class _ChangeGroup(Component):
         if r:
             try:
                 self._remarks = aviation_weather.Remarks(" ".join(r))
-            except exceptions.RemarksDecodeError:
-                pass
+            except exceptions.RemarksDecodeError as e:
+                raise exceptions.ChangeGroupDecodeError from e
 
     @property
     def raw(self):
@@ -83,7 +83,10 @@ class BecomingGroup(_ChangeGroup):
         end_time = str(m.group("end_time"))
         self.start_time = aviation_weather.Time(start_time + "00Z")
         self.end_time = aviation_weather.Time(end_time + "00Z")
-        super().__init__(m.group("remainder"))
+        try:
+            super().__init__(m.group("remainder"))
+        except exceptions.ChangeGroupDecodeError as e:
+            raise exceptions.BecomingGroupDecodeError("BecomingGroup(%r) could not be parsed" % raw) from e
 
     @property
     def raw(self):
@@ -103,7 +106,10 @@ class FromGroup(_ChangeGroup):
             raise exceptions.FromGroupDecodeError("FromGroup(%r) could not be parsed" % raw)
         time = str(m.group("time"))
         self.time = aviation_weather.Time(time + "Z")
-        super().__init__(m.group("remainder"))
+        try:
+            super().__init__(m.group("remainder"))
+        except exceptions.ChangeGroupDecodeError as e:
+            raise exceptions.FromGroupDecodeError("FromGroup(%r) could not be parsed" % raw) from e
 
     @property
     def raw(self):
@@ -132,7 +138,10 @@ class ProbabilityGroup(_ChangeGroup):
             self.start_time = None
             self.end_time = None
             remainder = ""
-        super().__init__(remainder)
+        try:
+            super().__init__(remainder)
+        except exceptions.ChangeGroupDecodeError as e:
+            raise exceptions.ProbabilityGroupDecodeError("ProbabilityGroup(%r) could not be parsed" % raw) from e
 
     @property
     def raw(self):
@@ -159,7 +168,10 @@ class TemporaryGroup(_ChangeGroup):
         end_time = str(m.group("end_time"))
         self.start_time = aviation_weather.Time(start_time + "00Z")
         self.end_time = aviation_weather.Time(end_time + "00Z")
-        super().__init__(m.group("remainder"))
+        try:
+            super().__init__(m.group("remainder"))
+        except exceptions.ChangeGroupDecodeError as e:
+            raise exceptions.TemporaryGroupDecodeError("TemporaryGroup(%r) could not be parsed" % raw) from e
 
     @property
     def raw(self):

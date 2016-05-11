@@ -3,6 +3,11 @@ class WeatherDecodeError(ValueError):
     pass
 
 
+class ForecastDecodeError(WeatherDecodeError):
+    """Forecast could not be decoded"""
+    pass
+
+
 class ReportDecodeError(WeatherDecodeError):
     """Report could not be decoded"""
     pass

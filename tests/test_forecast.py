@@ -20,35 +20,35 @@ class TestForecast(unittest.TestCase):
         self.assertEqual(wind_shear, forecast.wind_shear)
         self.assertEqual(changes, forecast.changes)
 
-    def test_parse_1(self):
+    def test_parse_CYVR(self):
         self._test_parse(
-            raw=("TAF KPIT 091730Z 0918/1024 15005KT 5SM HZ FEW020 WS010/31022KT"
-                 " FM091930 30015G25KT 3SM SHRA OVC015"
-                 " TEMPO 0920/0922 1/2SM +TSRA OVC008CB"
-                 " FM100100 27008KT 5SM SHRA BKN020 OVC040"
-                 " PROB30 1004/1007 1SM -RA BR"
-                 " FM101015 18005KT 6SM -SHRA OVC020"
-                 " BECMG 1013/1015 P6SM NSW SKC"),
+            raw=("TAF CYVR 090538Z 0906/1012 10010KT P6SM FEW040 FEW070"
+                 " TEMPO 0906/0909 FEW020 SCT040 BKN070"
+                 " PROB30 0906/0907 VRB15G25KT 6SM TSRA SCT015 BKN040CB"
+                 " FM090900 10008KT P6SM FEW080"
+                 " BECMG 0910/0912 33007KT"
+                 " BECMG 0918/0920 28015KT"
+                 " FM100800 VRB03KT P6SM SKC RMK NXT FCST BY 090900Z"),
             type_=aviation_weather.MessageType("TAF"),
-            location=aviation_weather.Location("KPIT"),
-            time=aviation_weather.Time("091730Z"),
-            valid_period=(aviation_weather.Time("091800Z"), aviation_weather.Time("102400Z")),
-            wind=aviation_weather.Wind("15005KT"),
-            visibility=aviation_weather.Visibility("5SM"),
-            weather_groups=(aviation_weather.WeatherGroup("HZ"),),
-            sky_conditions=(aviation_weather.SkyCondition("FEW020"),),
-            wind_shear=aviation_weather.WindShear("WS010/31022KT"),
+            location=aviation_weather.Location("CYVR"),
+            time=aviation_weather.Time("090538Z"),
+            valid_period=(aviation_weather.Time("090600Z"), aviation_weather.Time("101200Z")),
+            wind=aviation_weather.Wind("10010KT"),
+            visibility=aviation_weather.Visibility("P6SM"),
+            weather_groups=(),
+            sky_conditions=(aviation_weather.SkyCondition("FEW040"), aviation_weather.SkyCondition("FEW070")),
+            wind_shear=None,
             changes=[
-                aviation_weather.FromGroup("FM091930 30015G25KT 3SM SHRA OVC015"),
-                aviation_weather.TemporaryGroup("TEMPO 0920/0922 1/2SM +TSRA OVC008CB"),
-                aviation_weather.FromGroup("FM100100 27008KT 5SM SHRA BKN020 OVC040"),
-                aviation_weather.ProbabilityGroup("PROB30 1004/1007 1SM -RA BR"),
-                aviation_weather.FromGroup("FM101015 18005KT 6SM -SHRA OVC020"),
-                aviation_weather.BecomingGroup("BECMG 1013/1015 P6SM NSW SKC")
+                aviation_weather.TemporaryGroup("TEMPO 0906/0909 FEW020 SCT040 BKN070"),
+                aviation_weather.ProbabilityGroup("PROB30 0906/0907 VRB15G25KT 6SM TSRA SCT015 BKN040CB"),
+                aviation_weather.FromGroup("FM090900 10008KT P6SM FEW080"),
+                aviation_weather.BecomingGroup("BECMG 0910/0912 33007KT"),
+                aviation_weather.BecomingGroup("BECMG 0918/0920 28015KT"),
+                aviation_weather.FromGroup("FM100800 VRB03KT P6SM SKC RMK NXT FCST BY 090900Z")
             ]
         )
 
-    def test_parse_2(self):
+    def test_parse_EGKK(self):
         self._test_parse(
             raw=("TAF EGKK 082259Z 0900/1006 08008KT CAVOK"
                  " BECMG 0909/0912 BKN040"
@@ -80,7 +80,7 @@ class TestForecast(unittest.TestCase):
             ]
         )
 
-    def test_parse_3(self):
+    def test_parse_KMIA(self):
         self._test_parse(
             raw=("KMIA 090259Z 0903/0924 VRB05KT P6SM SKC"
                  " FM091400 12013KT P6SM SCT050"),
@@ -98,30 +98,40 @@ class TestForecast(unittest.TestCase):
             ]
         )
 
-    def test_parse_4(self):
+    def test_parse_KPIT(self):
         self._test_parse(
-            raw=("TAF CYVR 090538Z 0906/1012 10010KT P6SM FEW040 FEW070"
-                 " TEMPO 0906/0909 FEW020 SCT040 BKN070"
-                 " PROB30 0906/0907 VRB15G25KT 6SM TSRA SCT015 BKN040CB"
-                 " FM090900 10008KT P6SM FEW080"
-                 " BECMG 0910/0912 33007KT"
-                 " BECMG 0918/0920 28015KT"
-                 " FM100800 VRB03KT P6SM SKC RMK NXT FCST BY 090900Z"),
+            raw=("TAF KPIT 091730Z 0918/1024 15005KT 5SM HZ FEW020 WS010/31022KT"
+                 " FM091930 30015G25KT 3SM SHRA OVC015"
+                 " TEMPO 0920/0922 1/2SM +TSRA OVC008CB"
+                 " FM100100 27008KT 5SM SHRA BKN020 OVC040"
+                 " PROB30 1004/1007 1SM -RA BR"
+                 " FM101015 18005KT 6SM -SHRA OVC020"
+                 " BECMG 1013/1015 P6SM NSW SKC"),
             type_=aviation_weather.MessageType("TAF"),
-            location=aviation_weather.Location("CYVR"),
-            time=aviation_weather.Time("090538Z"),
-            valid_period=(aviation_weather.Time("090600Z"), aviation_weather.Time("101200Z")),
-            wind=aviation_weather.Wind("10010KT"),
-            visibility=aviation_weather.Visibility("P6SM"),
-            weather_groups=(),
-            sky_conditions=(aviation_weather.SkyCondition("FEW040"), aviation_weather.SkyCondition("FEW070")),
-            wind_shear=None,
+            location=aviation_weather.Location("KPIT"),
+            time=aviation_weather.Time("091730Z"),
+            valid_period=(aviation_weather.Time("091800Z"), aviation_weather.Time("102400Z")),
+            wind=aviation_weather.Wind("15005KT"),
+            visibility=aviation_weather.Visibility("5SM"),
+            weather_groups=(aviation_weather.WeatherGroup("HZ"),),
+            sky_conditions=(aviation_weather.SkyCondition("FEW020"),),
+            wind_shear=aviation_weather.WindShear("WS010/31022KT"),
             changes=[
-                aviation_weather.TemporaryGroup("TEMPO 0906/0909 FEW020 SCT040 BKN070"),
-                aviation_weather.ProbabilityGroup("PROB30 0906/0907 VRB15G25KT 6SM TSRA SCT015 BKN040CB"),
-                aviation_weather.FromGroup("FM090900 10008KT P6SM FEW080"),
-                aviation_weather.BecomingGroup("BECMG 0910/0912 33007KT"),
-                aviation_weather.BecomingGroup("BECMG 0918/0920 28015KT"),
-                aviation_weather.FromGroup("FM100800 VRB03KT P6SM SKC RMK NXT FCST BY 090900Z")
+                aviation_weather.FromGroup("FM091930 30015G25KT 3SM SHRA OVC015"),
+                aviation_weather.TemporaryGroup("TEMPO 0920/0922 1/2SM +TSRA OVC008CB"),
+                aviation_weather.FromGroup("FM100100 27008KT 5SM SHRA BKN020 OVC040"),
+                aviation_weather.ProbabilityGroup("PROB30 1004/1007 1SM -RA BR"),
+                aviation_weather.FromGroup("FM101015 18005KT 6SM -SHRA OVC020"),
+                aviation_weather.BecomingGroup("BECMG 1013/1015 P6SM NSW SKC")
             ]
         )
+
+    def _test_invalid(self, raw):
+        with self.assertRaises(aviation_weather.exceptions.ForecastDecodeError):
+            aviation_weather.Forecast(raw)
+
+    def test_invalid_blank(self):
+        self._test_invalid("")
+
+    def test_invalid_bad(self):
+        self._test_invalid("a PROB30 FM010101 2")

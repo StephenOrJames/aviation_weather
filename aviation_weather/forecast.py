@@ -21,7 +21,12 @@ class Forecast(object):
 
     def __init__(self, raw):
         parts = re.split(r"\s(?=(?:BECMG|FM\d{6}|PROB\d{2}|TEMPO)\s)", raw)  # separate the major parts
+        try:
+            self._parse(raw, parts)
+        except (exceptions.ComponentDecodeError, IndexError) as e:
+            raise exceptions.ForecastDecodeError("Forecast(%r) could not be parsed") from e
 
+    def _parse(self, raw, parts):
         part = parts[0]
         t = re.match(r"TAF(?: AMD)?\s+", raw)
         if t is None:

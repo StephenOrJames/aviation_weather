@@ -1,0 +1,98 @@
+            <section id="parse-report">
+                <h3>Report</h3>
+                <p>
+                    A provided report, such as a METAR or SPECI, will be broken down into its various components.
+                    For example, if the METAR:
+                </p>
+                <pre>EDDF 221850Z 21005KT 9999 VCSH FEW025 FEW050CB BKN090 BKN140 18/11 Q1009 NOSIG</pre>
+                <p>is parsed via the URL:</p>
+                <pre>{{ url_for("api.parse_report", raw="EDDF 221850Z 21005KT 9999 VCSH FEW025 FEW050CB BKN090 BKN140 18/11 Q1009 NOSIG") }}</pre>
+                <p>the result should be:</p>
+                <pre>
+{
+  "_end": {
+    "raw": "NOSIG"
+  },
+  "location": {
+    "identifier": "EDDF",
+    "raw": "EDDF"
+  },
+  "modifier": null,
+  "pressure": {
+    "indicator": "Q",
+    "raw": "Q1009",
+    "value": 1009
+  },
+  "raw": "EDDF 221850Z 21005KT 9999 VCSH FEW025 FEW050CB BKN090 BKN140 18/11 Q1009 NOSIG",
+  "remarks": null,
+  "runway_visual_range": null,
+  "sky_conditions": [
+    {
+      "cumulonimbus": false,
+      "height": 2500,
+      "raw": "FEW025",
+      "towering_cumulus": false,
+      "type": "FEW"
+    },
+    {
+      "cumulonimbus": true,
+      "height": 5000,
+      "raw": "FEW050CB",
+      "towering_cumulus": false,
+      "type": "FEW"
+    },
+    {
+      "cumulonimbus": false,
+      "height": 9000,
+      "raw": "BKN090",
+      "towering_cumulus": false,
+      "type": "BKN"
+    },
+    {
+      "cumulonimbus": false,
+      "height": 14000,
+      "raw": "BKN140",
+      "towering_cumulus": false,
+      "type": "BKN"
+    }
+  ],
+  "temperature": {
+    "dew_point": 11,
+    "raw": "18/11",
+    "temperature": 18
+  },
+  "time": {
+    "day": 22,
+    "hour": 18,
+    "minute": 50,
+    "raw": "221850Z",
+    "timezone": "Z"
+  },
+  "type": null,
+  "visibility": {
+    "cavok": null,
+    "distance": 9999,
+    "greater_than": false,
+    "less_than": false,
+    "raw": "9999",
+    "unit": "m"
+  },
+  "weather_groups": [
+    {
+      "descriptor": "SH",
+      "intensity": "VC",
+      "phenomenon": null,
+      "raw": "VCSH"
+    }
+  ],
+  "wind": {
+    "direction": 210,
+    "gusts": null,
+    "raw": "21005KT",
+    "speed": 5,
+    "unit": "KT",
+    "variable": null
+  }
+}
+</pre>
+            </section>

@@ -1,0 +1,360 @@
+            <section id="parse-forecast">
+                <h3>Forecast</h3>
+                <p>
+                    A provided forecast, such as a TAF or TAF AMD, will be broken down into its various components.
+                    For example, if the TAF:
+                </p>
+                <pre>
+TAF CYYC 221738Z 2218/2318 26008KT P6SM -RA SCT008 OVC012
+  TEMPO 2218/2221 2SM -RASN BR SCT003 OVC008
+  FM222100 33012KT P6SM SCT008 OVC012
+  TEMPO 2221/2303 2SM -DZ BR OVC008
+  FM230300 31012KT P6SM SCT012 BKN025
+  TEMPO 2303/2318 P6SM -SHRA SCT008 OVC012 RMK NXT FCST BY 222100Z
+</pre>
+                <p>is parsed via the URL:</p>
+                <pre>{{ url_for("api.parse_forecast", raw="""\
+TAF CYYC 221738Z 2218/2318 26008KT P6SM -RA SCT008 OVC012\
+  TEMPO 2218/2221 2SM -RASN BR SCT003 OVC008\
+  FM222100 33012KT P6SM SCT008 OVC012\
+  TEMPO 2221/2303 2SM -DZ BR OVC008\
+  FM230300 31012KT P6SM SCT012 BKN025\
+  TEMPO 2303/2318 P6SM -SHRA SCT008 OVC012 RMK NXT FCST BY 222100Z\
+""") }}</pre>
+                <p>the result should be:</p>
+                <pre>
+{
+  "changes": [
+    {
+      "_remarks": null,
+      "end_time": {
+        "day": 22,
+        "hour": 21,
+        "minute": 0,
+        "raw": "222100Z",
+        "timezone": "Z"
+      },
+      "raw": "TEMPO 2218/2221 2SM -RASN BR SCT003 OVC008",
+      "sky_conditions": [
+        {
+          "cumulonimbus": false,
+          "height": 300,
+          "raw": "SCT003",
+          "towering_cumulus": false,
+          "type": "SCT"
+        },
+        {
+          "cumulonimbus": false,
+          "height": 800,
+          "raw": "OVC008",
+          "towering_cumulus": false,
+          "type": "OVC"
+        }
+      ],
+      "start_time": {
+        "day": 22,
+        "hour": 18,
+        "minute": 0,
+        "raw": "221800Z",
+        "timezone": "Z"
+      },
+      "visibility": {
+        "cavok": null,
+        "distance": 2,
+        "greater_than": false,
+        "less_than": false,
+        "raw": "2SM",
+        "unit": "SM"
+      },
+      "weather_groups": [
+        {
+          "descriptor": null,
+          "intensity": "-",
+          "phenomenon": [
+            "RA",
+            "SN"
+          ],
+          "raw": "-RASN"
+        },
+        {
+          "descriptor": null,
+          "intensity": "",
+          "phenomenon": "BR",
+          "raw": "BR"
+        }
+      ],
+      "wind": null
+    },
+    {
+      "_remarks": null,
+      "raw": "FM222100 33012KT P6SM SCT008 OVC012",
+      "sky_conditions": [
+        {
+          "cumulonimbus": false,
+          "height": 800,
+          "raw": "SCT008",
+          "towering_cumulus": false,
+          "type": "SCT"
+        },
+        {
+          "cumulonimbus": false,
+          "height": 1200,
+          "raw": "OVC012",
+          "towering_cumulus": false,
+          "type": "OVC"
+        }
+      ],
+      "time": {
+        "day": 22,
+        "hour": 21,
+        "minute": 0,
+        "raw": "222100Z",
+        "timezone": "Z"
+      },
+      "visibility": {
+        "cavok": null,
+        "distance": 6,
+        "greater_than": true,
+        "less_than": false,
+        "raw": "P6SM",
+        "unit": "SM"
+      },
+      "weather_groups": [],
+      "wind": {
+        "direction": 330,
+        "gusts": null,
+        "raw": "33012KT",
+        "speed": 12,
+        "unit": "KT",
+        "variable": null
+      }
+    },
+    {
+      "_remarks": null,
+      "end_time": {
+        "day": 23,
+        "hour": 3,
+        "minute": 0,
+        "raw": "230300Z",
+        "timezone": "Z"
+      },
+      "raw": "TEMPO 2221/2303 2SM -DZ BR OVC008",
+      "sky_conditions": [
+        {
+          "cumulonimbus": false,
+          "height": 800,
+          "raw": "OVC008",
+          "towering_cumulus": false,
+          "type": "OVC"
+        }
+      ],
+      "start_time": {
+        "day": 22,
+        "hour": 21,
+        "minute": 0,
+        "raw": "222100Z",
+        "timezone": "Z"
+      },
+      "visibility": {
+        "cavok": null,
+        "distance": 2,
+        "greater_than": false,
+        "less_than": false,
+        "raw": "2SM",
+        "unit": "SM"
+      },
+      "weather_groups": [
+        {
+          "descriptor": null,
+          "intensity": "-",
+          "phenomenon": "DZ",
+          "raw": "-DZ"
+        },
+        {
+          "descriptor": null,
+          "intensity": "",
+          "phenomenon": "BR",
+          "raw": "BR"
+        }
+      ],
+      "wind": null
+    },
+    {
+      "_remarks": null,
+      "raw": "FM230300 31012KT P6SM SCT012 BKN025",
+      "sky_conditions": [
+        {
+          "cumulonimbus": false,
+          "height": 1200,
+          "raw": "SCT012",
+          "towering_cumulus": false,
+          "type": "SCT"
+        },
+        {
+          "cumulonimbus": false,
+          "height": 2500,
+          "raw": "BKN025",
+          "towering_cumulus": false,
+          "type": "BKN"
+        }
+      ],
+      "time": {
+        "day": 23,
+        "hour": 3,
+        "minute": 0,
+        "raw": "230300Z",
+        "timezone": "Z"
+      },
+      "visibility": {
+        "cavok": null,
+        "distance": 6,
+        "greater_than": true,
+        "less_than": false,
+        "raw": "P6SM",
+        "unit": "SM"
+      },
+      "weather_groups": [],
+      "wind": {
+        "direction": 310,
+        "gusts": null,
+        "raw": "31012KT",
+        "speed": 12,
+        "unit": "KT",
+        "variable": null
+      }
+    },
+    {
+      "_remarks": {
+        "raw": "RMK NXT FCST BY 222100Z",
+        "text": "RMK NXT FCST BY 222100Z"
+      },
+      "end_time": {
+        "day": 23,
+        "hour": 18,
+        "minute": 0,
+        "raw": "231800Z",
+        "timezone": "Z"
+      },
+      "raw": "TEMPO 2303/2318 P6SM -SHRA SCT008 OVC012 RMK NXT FCST BY 222100Z",
+      "sky_conditions": [
+        {
+          "cumulonimbus": false,
+          "height": 800,
+          "raw": "SCT008",
+          "towering_cumulus": false,
+          "type": "SCT"
+        },
+        {
+          "cumulonimbus": false,
+          "height": 1200,
+          "raw": "OVC012",
+          "towering_cumulus": false,
+          "type": "OVC"
+        }
+      ],
+      "start_time": {
+        "day": 23,
+        "hour": 3,
+        "minute": 0,
+        "raw": "230300Z",
+        "timezone": "Z"
+      },
+      "visibility": {
+        "cavok": null,
+        "distance": 6,
+        "greater_than": true,
+        "less_than": false,
+        "raw": "P6SM",
+        "unit": "SM"
+      },
+      "weather_groups": [
+        {
+          "descriptor": "SH",
+          "intensity": "-",
+          "phenomenon": "RA",
+          "raw": "-SHRA"
+        }
+      ],
+      "wind": null
+    }
+  ],
+  "location": {
+    "identifier": "CYYC",
+    "raw": "CYYC"
+  },
+  "raw": "TAF CYYC 221738Z 2218/2318 26008KT P6SM -RA SCT008 OVC012 TEMPO 2218/2221 2SM -RASN BR SCT003 OVC008 FM222100 33012KT P6SM SCT008 OVC012 TEMPO 2221/2303 2SM -DZ BR OVC008 FM230300 31012KT P6SM SCT012 BKN025 TEMPO 2303/2318 P6SM -SHRA SCT008 OVC012 RMK NXT FCST BY 222100Z",
+  "sky_conditions": [
+    {
+      "cumulonimbus": false,
+      "height": 800,
+      "raw": "SCT008",
+      "towering_cumulus": false,
+      "type": "SCT"
+    },
+    {
+      "cumulonimbus": false,
+      "height": 1200,
+      "raw": "OVC012",
+      "towering_cumulus": false,
+      "type": "OVC"
+    }
+  ],
+  "time": {
+    "day": 22,
+    "hour": 17,
+    "minute": 38,
+    "raw": "221738Z",
+    "timezone": "Z"
+  },
+  "type": {
+    "raw": "TAF",
+    "text": "TAF"
+  },
+  "valid_period": [
+    {
+      "day": 22,
+      "hour": 18,
+      "minute": 0,
+      "raw": "221800Z",
+      "timezone": "Z"
+    },
+    {
+      "day": 23,
+      "hour": 18,
+      "minute": 0,
+      "raw": "231800Z",
+      "timezone": "Z"
+    }
+  ],
+  "visibility": {
+    "cavok": null,
+    "distance": 6,
+    "greater_than": true,
+    "less_than": false,
+    "raw": "P6SM",
+    "unit": "SM"
+  },
+  "weather_groups": [
+    {
+      "descriptor": null,
+      "intensity": "-",
+      "phenomenon": "RA",
+      "raw": "-RA"
+    }
+  ],
+  "wind": {
+    "direction": 260,
+    "gusts": null,
+    "raw": "26008KT",
+    "speed": 8,
+    "unit": "KT",
+    "variable": null
+  },
+  "wind_shear": null
+}
+</pre>
+                <p>
+                    <strong>Note that the server's routing might not support line feeds in the input.</strong>
+                    It is therefore advisable to replace such feeds with spaces in order to avoid possible 404 responses.
+                </p>
+            </section>

@@ -1,0 +1,35 @@
+    <header class="row">
+        <h1>Aviation Weather</h1>
+
+        <div class="title-bar" data-responsive-toggle="nav" data-hide-for="medium">
+            <button class="menu-icon" type="button" data-toggle></button>
+            <div class="title-bar-title">Menu</div>
+        </div>
+        <nav id="nav" class="top-bar">
+            <ul class="vertical medium-horizontal menu" data-responsive-menu="accordion medium-dropdown">
+                <li><a href="{{ url_for("api.index") }}">API</a></li>
+                {% with doc=url_for("documentation") %}
+                <li>
+                    <a href="{{ doc }}">Documentation</a>
+                    <ul class="nested vertical menu">
+                        <li>
+                            <a href="{{ doc }}#parse">Parse</a>
+                            <ul class="vertical menu">
+                                <li><a href="{{ doc }}#parse-component">Component</a></li>
+                                <li><a href="{{ doc }}#parse-forecast">Forecast</a></li>
+                                <li><a href="{{ doc }}#parse-report">Report</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="{{ doc }}#retrieve">Retrieve</a>
+                            <ul class="vertical menu">
+                                <li><a href="{{ doc }}#retrieve-report">Report</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                {% endwith %}
+                <li><a href="https://github.com/StephenOrJames/aviation_weather">Source code</a></li>
+            </ul>
+        </nav>
+    </header>

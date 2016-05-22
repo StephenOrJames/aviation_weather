@@ -1,0 +1,75 @@
+            <section id="retrieve-report">
+                <h3>Report</h3>
+                <p>
+                    You may retrieve <em>and</em> parse the latest METAR available from NOAA all in one go by simply
+                    specifying the ICAO code of the airport whose METAR should be used.
+                    For example, <code>{{ url_for("api.retrieve_report", location_identifier="KATL") }}</code> will give something like:
+                </p>
+                <pre>
+{
+  "_end": null,
+  "location": {
+    "identifier": "KATL",
+    "raw": "KATL"
+  },
+  "modifier": null,
+  "pressure": {
+    "indicator": "A",
+    "raw": "A2996",
+    "value": 29.96
+  },
+  "raw": "KATL 221852Z 35013G25KT 10SM FEW065 FEW250 24/07 A2996 RMK AO2 PK WND 33026/1839 SLP137 T02440067",
+  "remarks": {
+    "raw": "RMK AO2 PK WND 33026/1839 SLP137 T02440067",
+    "text": "RMK AO2 PK WND 33026/1839 SLP137 T02440067"
+  },
+  "runway_visual_range": null,
+  "sky_conditions": [
+    {
+      "cumulonimbus": false,
+      "height": 6500,
+      "raw": "FEW065",
+      "towering_cumulus": false,
+      "type": "FEW"
+    },
+    {
+      "cumulonimbus": false,
+      "height": 25000,
+      "raw": "FEW250",
+      "towering_cumulus": false,
+      "type": "FEW"
+    }
+  ],
+  "temperature": {
+    "dew_point": 7,
+    "raw": "24/07",
+    "temperature": 24
+  },
+  "time": {
+    "day": 22,
+    "hour": 18,
+    "minute": 52,
+    "raw": "221852Z",
+    "timezone": "Z"
+  },
+  "type": null,
+  "visibility": {
+    "cavok": null,
+    "distance": 10,
+    "greater_than": false,
+    "less_than": false,
+    "raw": "10SM",
+    "unit": "SM"
+  },
+  "weather_groups": null,
+  "wind": {
+    "direction": 350,
+    "gusts": 25,
+    "raw": "35013G25KT",
+    "speed": 13,
+    "unit": "KT",
+    "variable": null
+  }
+}
+</pre>
+            </section>

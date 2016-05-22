@@ -1,0 +1,23 @@
+pre {
+    margin: -.75em 0 .5em;
+    max-height: 20rem;
+
+    /* Copied from the <code> CSS in Foundation */
+    background-color: #e6e6e6;
+    border: 1px solid #cacaca;
+    color: #0a0a0a;
+    font-family: Consolas, "Liberation Mono", Courier, monospace;
+    font-weight: normal;
+    padding: 0.125rem 0.3125rem 0.0625rem;
+}
+
+section {
+    margin-bottom: 1rem;
+}
+section section {
+    padding-left: 1rem;
+}
+
+footer {
+    border-top: 1px solid #ddd;
+}

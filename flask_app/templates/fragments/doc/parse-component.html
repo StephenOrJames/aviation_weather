@@ -1,0 +1,29 @@
+            <section id="parse-component">
+                <h3>Component</h3>
+                <p>The components supported by the web API include:</p>
+                <ul>
+                    <li>Pressure (<code>pressure</code>)</li>
+                    <li>Runway Visual Range (<code>runwayvisualrange</code>)</li>
+                    <li>Sky condition (<code>skycondition</code>)</li>
+                    <li>Temperature (<code>temperature</code>)</li>
+                    <li>Time (<code>time</code>)</li>
+                    <li>Visibility (<code>visibility</code>)</li>
+                    <li>Weather group (<code>weathergroup</code>)</li>
+                    <li>Wind (<code>wind</code>)</li>
+                    <li>Wind shear (<code>windshear</code>)</li>
+                </ul>
+                <p>Specifying one of these components, as well as the raw text representing that component.</p>
+                <p>For example, parsing:</p>
+                <pre>{{ url_for("api.parse_component", component="wind", raw="22012G127KT") }}</pre>
+                <p>will give:</p>
+                <pre>
+{
+  "direction": 220,
+  "gusts": 127,
+  "raw": "22012G127KT",
+  "speed": 12,
+  "unit": "KT",
+  "variable": null
+}
+</pre>
+            </section>

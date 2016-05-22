@@ -167,7 +167,7 @@ class Report(object):
         Returns:
             A Report object, or None if a METAR could not be found.
         """
-        URL = "http://weather.noaa.gov/pub/data/observations/metar/stations/%s.TXT"
+        URL = "ftp://tgftp.nws.noaa.gov/data/observations/metar/stations/%s.TXT"
         try:
             with urlopen(URL % code.upper()) as response:
                 metar = response.read().decode('utf-8').splitlines()[1].strip()

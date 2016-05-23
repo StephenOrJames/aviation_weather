@@ -54,7 +54,12 @@ def get_dict(obj):
 
 @api.route("/")
 def index():
-    return jsonify(error="API documentation is available at %s" % url_for("documentation"))
+    return jsonify(
+        error="API documentation is available at %s and a sandbox is available at %s" % (
+            url_for("documentation"),
+            url_for("sandbox")
+        )
+    )
 
 
 @api.route("/retrieve/report")

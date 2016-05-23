@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <main class="row" id="sandbox">
+        <h2>API Sandbox</h2>
+
+        <noscript>
+            <p>JavaScript is required to use the API sandbox.</p>
+        </noscript>
+
+        <section class="medium-6 columns">
+            <h3>Query</h3>
+
+            <form method="post">
+                <fieldset class="fieldset">
+                    <legend>Query</legend>
+
+                    <label>
+                        Action
+                        <select name="action" required="required">
+                            <option value="" disabled="disabled" selected="selected">select an action</option>
+                            <option value="parse">parse</option>
+                            <option value="retrieve">retrieve</option>
+                        </select>
+                    </label>
+
+                    <label>
+                        Type
+                        <select name="type" required="required">
+                            <option value="" disabled="disabled" selected="selected">select a type</option>
+                            <optgroup label="parse">
+                                <option value="component">component</option>
+                                <option value="forecast">forecast</option>
+                                <option value="report">report</option>
+                            </optgroup>
+                            <optgroup label="retrieve">
+                                <option value="report">report</option>
+                            </optgroup>
+                        </select>
+                    </label>
+
+                    <label>
+                        Subtype
+                        <select name="subtype">
+                            <option value="" disabled="disabled" selected="selected">select a subtype</option>
+                            {% for component in components %}
+                                <option value="{{ component }}">{{ component }}</option>
+                            {% endfor %}
+                        </select>
+                    </label>
+
+                    <label>
+                        Text
+                        <input name="text" type="text" required="required">
+                    </label>
+
+                    <button class="button expanded">Submit</button>
+                </fieldset>
+            </form>
+        </section>
+
+        <section class="medium-6 columns">
+            <h3>Result</h3>
+            <pre id="result"></pre>
+        </section>
+    </main>
+{% endblock %}

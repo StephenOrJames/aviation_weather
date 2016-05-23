@@ -8,6 +8,7 @@
         <nav id="nav" class="top-bar">
             <ul class="vertical medium-horizontal menu" data-responsive-menu="accordion medium-dropdown">
                 <li><a href="{{ url_for("api.index") }}">API</a></li>
+                <li><a href="{{ url_for("sandbox") }}">API sandbox</a></li>
                 {% with doc=url_for("documentation") %}
                 <li>
                     <a href="{{ doc }}">Documentation</a>

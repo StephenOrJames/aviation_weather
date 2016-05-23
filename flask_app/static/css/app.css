@@ -1,3 +1,8 @@
+.no-js .title-bar,
+.no-js main#sandbox section {
+    display: none;
+}
+
 pre {
     margin: -.75em 0 .5em;
     max-height: 20rem;
@@ -9,6 +14,15 @@ pre {
     font-family: Consolas, "Liberation Mono", Courier, monospace;
     font-weight: normal;
     padding: 0.125rem 0.3125rem 0.0625rem;
+}
+
+/* Used for the sandbox */
+pre#result {
+    height: 20rem;
+    margin-top: 1.75rem;
+    max-height: none;
+    min-height: 12rem;
+    resize: vertical;
 }
 
 section {

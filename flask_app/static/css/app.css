@@ -1,3 +1,7 @@
+[data-sticky] {
+    width: 100%;
+}
+
 .no-js .title-bar,
 .no-js main#sandbox section {
     display: none;
@@ -30,6 +34,10 @@ section {
 }
 section section {
     padding-left: 1rem;
+}
+
+.top-bar {
+    border-bottom: 2px solid #fff;
 }
 
 footer {

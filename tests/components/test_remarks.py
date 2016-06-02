@@ -9,7 +9,6 @@ class TestRemarks(unittest.TestCase):
     def _test_valid(self, raw, ao, slp):
         rmk = Remarks(raw)
         self.assertEqual(raw, rmk.raw)
-        self.assertEqual(raw, rmk.text)
         self.assertEqual(ao, rmk.ao)
         self.assertEqual(slp, rmk.slp)
 

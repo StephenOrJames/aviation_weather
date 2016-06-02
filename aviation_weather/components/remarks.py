@@ -9,13 +9,14 @@ class Remarks(Component):
 
     # TODO: create property setters that properly update text.
 
+    """The Remarks class represents the remarks ("RMK") section of a report or forecast.
+    """
+
     def __init__(self, raw):
         """Parse `raw` to create a new Remarks object.
 
         Args:
             raw (str): The remarks to be stored (not actually parsed at the moment).
-            ao (int): The type of automated station. If AO1, then 1, or if AO2, then 2. Otherwise, the value is None.
-            slp (Pressure/None): The sea-level pressure.
 
         Raises:
             RemarksDecodeError: If `raw` could not be parsed.
@@ -23,7 +24,7 @@ class Remarks(Component):
         if not raw.startswith("RMK "):
             raise RemarksDecodeError("Remarks(%r) could not be parsed" % raw)
 
-        self.text = raw
+        self._text = raw
 
         ao = re.search(r"\bAO(?P<ao>[12])\b", raw)
         if ao:
@@ -43,12 +44,16 @@ class Remarks(Component):
 
     @property
     def raw(self):
-        return self.text
+        return self._text
 
     @property
     def ao(self):
+        """The type of automated station. If AO1, then 1, or if AO2, then 2. Otherwise, the value is None (int/None).
+        """
         return self._ao
 
     @property
     def slp(self):
+        """The sea-level pressure (Pressure/None).
+        """
         return self._slp
